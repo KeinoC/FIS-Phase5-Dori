@@ -1,9 +1,7 @@
 import React, { useState, useContext } from "react";
-import { Button, Error, Input, FormField, Label } from "../styles";
-import {useHistory} from "react-router-dom";
-import "./LoginForm.css"
-
-import {UserContext} from "./context";
+import { useHistory } from "react-router-dom";
+import "./LoginForm.css";
+import { UserContext } from "./context";
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -12,9 +10,7 @@ function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
-  const {setUser} = useContext(UserContext);
-
-
+  const { setUser, user } = useContext(UserContext);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -38,39 +34,37 @@ function LoginForm() {
     });
   }
 
+
   return (
-    <form onSubmit={handleSubmit} className = "login-form login-container">
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          autoComplete="off"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div>
-        <button variant="fill" color="primary" type="submit">
-          {isLoading ? "Loading..." : "Login"}
-        </button>
-      </div>
-      <FormField>
-        {/* {errors.map((err) => (
-          <Error key={err}>{err}</Error>
-        ))} */}
-      </FormField>
-    </form>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            autoComplete="off"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <button variant="fill" color="primary" type="submit">
+            {isLoading ? "Loading..." : "Login"}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 

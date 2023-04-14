@@ -1,16 +1,16 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../context.js";
 import "./NewUnitForm.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function NewUnitForm() {
     const { user } = useContext(UserContext);
+    const history = useHistory();
 
-    console.log(`user: ${UserContext}`);
+    console.log(user);
 
     const [formData, setFormData] = useState({
         lessor_id: user.id,
-        // lessor: user,
         name: "",
         image_url: "",
         type: "",
@@ -44,8 +44,7 @@ function NewUnitForm() {
             .then((data) => {
                 console.log("Success:", data);
                 setFormData({
-                    lessor_id: parseInt(user.id),
-                    // lessor: user,
+                    lessor_id: user.id,
                     name: "",
                     image_url: "",
                     type: "",
@@ -66,6 +65,8 @@ function NewUnitForm() {
             });
     };
 
+
+
     const renderInput = (inputName, inputType = "text") => {
         return (
             <label>
@@ -79,6 +80,7 @@ function NewUnitForm() {
             </label>
         );
     };
+
 
     return (
         <>
@@ -101,9 +103,8 @@ function NewUnitForm() {
                     <button type="button">Cancel</button>
                 </Link>
 
-                <Link to="/dashboard">
-                    <button type="submit">Submit</button>
-                </Link>
+                    <button type="submit" onSubmit={() => history.push("/dashboard")}>Submit</button>
+
             </form>
         </>
     );

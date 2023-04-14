@@ -94,12 +94,12 @@ class CheckSession(Resource):
 @app.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
-    return jsonify([user.serialize() for user in users])
+    return jsonify([user.to_dict(rules=(("units",))) for user in users])
 
 @app.route('/users/<int:id>', methods=['GET'])
 def get_user(id):
     user = User.query.get(id)
-    return jsonify(user.serialize())
+    return jsonify(user.to_dict(rules=(("units",))))
 
 @app.route('/users/<int:id>', methods=['PUT'])
 def update_user(id):
@@ -159,7 +159,7 @@ def create_unit():
 
     db.session.add(unit)
     db.session.commit()
-    return jsonify(unit.serialize()), 201
+    return jsonify(unit.serialize(rules=("user",))), 201
 
     ### to ensure the lessor relationship is properly loaded before serializing
 
