@@ -8,6 +8,8 @@ import {
 } from "react-google-maps";
 // import * as parkData from "./data/skateboard-parks.json";
 import mapStyles from "./mapStyles";
+import Geocode from 'react-geocode';
+Geocode.setApiKey('AIzaSyAF9-RxPwZDzrJQnOx4P_W8yM-Mhtf-9B8');
 
 function Map() {
     // const [selectedPark, setSelectedPark] = useState(null);
