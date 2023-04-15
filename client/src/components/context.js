@@ -5,10 +5,12 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [allUnits, setAllUnits] = useState([]);
+    
 
     const [allApplications, setAllApplications] = useState(null);
     const [userApplications, setUserApplications] = useState(null);
     const [selectedApplication, setSelectedApplication] = useState(null);
+    const [myId, setMyId] = useState("");
 
     const [userUnits, setUserUnits] = useState([]);
     const [pSearchResults, setPSearchResults] = useState([]);
@@ -22,52 +24,103 @@ const UserProvider = ({ children }) => {
         currentAppUnit ? currentAppUnit.lessor_id : ""
     );
 
-
-///////////////////////  UNIT EDIT  /////////////////////////
-const [unitToEdit, setUnitToEdit] = useState(null);
-const [unitEditPrefill, setUnitEditPrefill] = useState({
-  name: "",
-  image_url: "",
-  type: "",
-  unit_num: "",
-  lot: "",
-  street: "",
-  city: "",
-  state: "",
-  zip: "",
-  beds: "",
-  baths: "",
-  sqft: "",
-  price: "",
-});
-
-useEffect(() => {
-  if (unitToEdit) {
-    setUnitEditPrefill({
-      name: unitToEdit.name,
-      image_url: unitToEdit.image_url,
-      type: unitToEdit.type,
-      unit_num: unitToEdit.unit_num,
-      lot: unitToEdit.lot,
-      street: unitToEdit.street,
-      city: unitToEdit.city,
-      state: unitToEdit.state,
-      zip: unitToEdit.zip,
-      beds: unitToEdit.beds,
-      baths: unitToEdit.baths,
-      sqft: unitToEdit.sqft,
-      price: unitToEdit.price,
+    const [newUnitFormData, setNewUnitFormData] = useState({
+        lessor_id: myId ? myId : "",
+        // lessor: user,
+        name: "",
+        image_url: "",
+        type: "",
+        unit_num: "",
+        lot: "",
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        beds: "",
+        baths: "",
+        sqft: "",
+        price: "",
     });
-  }
-}, [unitToEdit]);
+
+    /////////////////////// new unit ///////////////////////// 
+
+
+    const handleNewUnitSubmit = (event) => {
+        event.preventDefault();
+        fetch("/units", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUnitFormData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                setNewUnitFormData({
+                    lessor_id: myId,
+                    // lessor: user,
+                    name: "",
+                    image_url: "",
+                    type: "",
+                    unit_num: "",
+                    lot: "",
+                    street: "",
+                    city: "",
+                    state: "",
+                    zip: "",
+                    beds: "",
+                    baths: "",
+                    sqft: "",
+                    price: "",
+                });
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
 
 
 
+    ///////////////////////  UNIT EDIT  /////////////////////////
+    const [unitToEdit, setUnitToEdit] = useState(null);
+    const [unitEditPrefill, setUnitEditPrefill] = useState({
+        name: "",
+        image_url: "",
+        type: "",
+        unit_num: "",
+        lot: "",
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        beds: "",
+        baths: "",
+        sqft: "",
+        price: "",
+    });
 
+    useEffect(() => {
+        if (unitToEdit) {
+            setUnitEditPrefill({
+                name: unitToEdit.name,
+                image_url: unitToEdit.image_url,
+                type: unitToEdit.type,
+                unit_num: unitToEdit.unit_num,
+                lot: unitToEdit.lot,
+                street: unitToEdit.street,
+                city: unitToEdit.city,
+                state: unitToEdit.state,
+                zip: unitToEdit.zip,
+                beds: unitToEdit.beds,
+                baths: unitToEdit.baths,
+                sqft: unitToEdit.sqft,
+                price: unitToEdit.price,
+            });
+        }
+    }, [unitToEdit]);
 
-
-///////////////////////////////////////////////////////////////////
-
+    ///////////////////////////////////////////////////////////////////
 
     const [unitOptionsApplication, setUnitOptionsApplication] = useState(true);
 
@@ -96,18 +149,19 @@ useEffect(() => {
         zip: currentAppUnit ? currentAppUnit.zip : "",
     });
 
-
-
     useEffect(() => {
         // auto-login & set user variables
         fetch("/check_session").then((r) => {
             if (r.ok) {
                 r.json().then((user) => {
                     setUser(user);
+                    setMyId(user.id);
                 });
             }
         });
     }, []);
+
+
 
     ///////////////////// UNITS BY ID //////////////////////////
 
@@ -122,13 +176,13 @@ useEffect(() => {
     }, [currentAppLessorId]);
 
     useEffect(() => {
-      if (user) {
-          setCurrentAppUnit((prevState) => ({
-              ...prevState,
-              lessee_id: user.id,
-          }));
-      }
-  }, [user]);
+        if (user) {
+            setCurrentAppUnit((prevState) => ({
+                ...prevState,
+                lessee_id: user.id,
+            }));
+        }
+    }, [user]);
 
     useEffect(() => {
         // fetch allUnits
@@ -138,80 +192,98 @@ useEffect(() => {
             }
         });
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            setNewUnitFormData((prevState) => ({
+                ...prevState,
+                lessor_id: user.id,
+            }));
+        }
+    }, [user]);
+
+
+    /////////////////////// New Unit Post request
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        const updated = { ...newUnitFormData, [name]: value }
+        setNewUnitFormData(updated)
+    };
+
+
+
+
+
+
+
+
+
+
     ////////////////////////////////////////////////////////////
     ///////////////////// Applications /////////////////////////
 
-
     /// New Application
     function handleApplicationSubmit() {
-      
-      if (user && currentAppUnit) {
-          const lessee_id = user.id
-          const unit_id = currentAppUnit.id
-          const status = "pending";
+        if (user && currentAppUnit) {
+            const lessee_id = user.id;
+            const unit_id = currentAppUnit.id;
+            const status = "pending";
 
-          fetch("/unit_applications", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  lessee_id,
-                  unit_id,
-                  status
-              }),
-          })
-              .then((response) => response.json())
-              .then((newUnitApplication) => {
-                  console.log("Success:", newUnitApplication);
-              })
-              .catch((error) => {
-                  console.error("Error:", error);
-              });
-      } else {
-          console.log("error: failed to submit application");
-      }
-  }
-
-
-  useEffect(() => {
-    if (currentAppUnit && currentAppUnit.lessor_id) {
-      setCurrentAppLessorId(currentAppUnit.lessor_id);
-      setCurrentAppUnitId(currentAppUnit.id);
+            fetch("/unit_applications", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    lessee_id,
+                    unit_id,
+                    status,
+                }),
+            })
+                .then((response) => response.json())
+                .then((newUnitApplication) => {
+                    console.log("Success:", newUnitApplication);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        } else {
+            console.log("error: failed to submit application");
+        }
     }
-  }, [currentAppUnit]); ///watch***********
-  
-  //// Fetch & set all applications
-  useEffect(() => {
-    fetch("/unit_applications")
-      .then((r) => r.json())
-      .then((applications) => {
-        setAllApplications(applications);
-      })
-  }, [user]);
-  
-  
-  //// Current User's Applications
-  useEffect(() => {
-    if (user && allApplications) {
-      const uApps = allApplications.filter(
-        (app) => app.lessee_id === user.id || app.lessor_id === user.id
-      );
-      setUserApplications(uApps);
-    }
-  }, [user, allApplications]);
 
-  // userApplications.map((app) => {
-  //   const userAppList = []
-  //   const unit = allUnits.filter(unit => app.unit_id === unit.id)
-  //   setUserUnits((prevState) => [...prevState, unit])
-  // })
+    useEffect(() => {
+        if (currentAppUnit && currentAppUnit.lessor_id) {
+            setCurrentAppLessorId(currentAppUnit.lessor_id);
+            setCurrentAppUnitId(currentAppUnit.id);
+        }
+    }, [currentAppUnit]); ///watch***********
 
+    //// Fetch & set all applications
+    useEffect(() => {
+        fetch("/unit_applications")
+            .then((r) => r.json())
+            .then((applications) => {
+                setAllApplications(applications);
+            });
+    }, [user]);
 
+    //// Current User's Applications
+    useEffect(() => {
+        if (user && allApplications) {
+            const uApps = allApplications.filter(
+                (app) => app.lessee_id === user.id || app.lessor_id === user.id
+            );
+            setUserApplications(uApps);
+        }
+    }, [user, allApplications]);
 
-
-
-
+    // userApplications.map((app) => {
+    //   const userAppList = []
+    //   const unit = allUnits.filter(unit => app.unit_id === unit.id)
+    //   setUserUnits((prevState) => [...prevState, unit])
+    // })
 
     /////////////////////////////////////////////////////////////
     /////////////////////  CURRENT USER'S UNITS  ////////////////
@@ -354,6 +426,12 @@ useEffect(() => {
                 setUserApplications,
                 selectedApplication,
                 setSelectedApplication,
+                handleNewUnitSubmit,
+                newUnitFormData,
+                setNewUnitFormData,
+                myId,
+                setMyId,
+                handleInputChange,
             }}
         >
             {children}

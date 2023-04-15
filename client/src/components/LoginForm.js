@@ -13,9 +13,9 @@ function LoginForm() {
   const history = useHistory();
 
   const {setUser} = useContext(UserContext);
-
-
-
+  
+  
+  
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -30,6 +30,7 @@ function LoginForm() {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user);
+          console.log(user)
           history.push("/Home"); // navigate to dashboard component after successful login
         });
       } else {
@@ -37,7 +38,7 @@ function LoginForm() {
       }
     });
   }
-
+  
   return (
     <form onSubmit={handleSubmit} className = "login-form login-container">
       <div>

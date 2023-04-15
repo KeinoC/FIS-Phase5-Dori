@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Error, Input, FormField, Label, Textarea } from "../styles";
+import { Link } from "react-router-dom";
 import { UserContext} from "./context.js"
 
 function SignUpForm() {
@@ -64,166 +64,164 @@ const {setUser} = useContext(UserContext)
   }
 
   return (
+    
     <form onSubmit={handleSubmit}>
-      <FormField>
-        <Label htmlFor="username">Username</Label>
-        <Input
+    <div>
+        <label htmlFor="username">Username</label>
+        <input
           type="text"
           id="username"
           autoComplete="off"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="first_name">First Name</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="first_name">First Name</label>
+        <input
           type="text"
           id="first_name"
           autoComplete="off"
           value={first_name}
           onChange={(e) => setFirst_name(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="last_name">Last Name</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="last_name">Last Name</label>
+        <input
           type="text"
           id="last_name"
           autoComplete="off"
           value={last_name}
           onChange={(e) => setLast_name(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="email">Email</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="email">Email</label>
+        <input
           type="email"
           id="email"
           autoComplete="off"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="phone">Phone</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="phone">Phone</label>
+        <input
           type="tel"
           id="phone"
           autoComplete="off"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="password">Password</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="password">Password</label>
+        <input
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="password">Password Confirmation</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="password">Password Confirmation</label>
+        <input
           type="password"
           id="password_confirmation"
           value={passwordConfirmation}
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           autoComplete="current-password"
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="dob">Date of Birth</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="dob">Date of Birth</label>
+        <input
           type="date"
           id="dob"
           value={dob}
           onChange={(e) => setDob(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="lot">Lot Number</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="lot">Lot Number</label>
+        <input
           type="text"
           id="lot"
           value={lot}
           onChange={(e) => setLot(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="street">Street</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="street">Street</label>
+        <input
           type="text"
           id="street"
           value={street}
           onChange={(e) => setStreet(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="city">City</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="city">City</label>
+        <input
           type="text"
           id="city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="state">State</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="state">State</label>
+        <input
           type="text"
           id="state"
           value={state}
           onChange={(e) => setState(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="zip">Zip Code</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="zip">Zip Code</label>
+        <input
           type="text"
           id="zip"
           value={zip}
           onChange={(e) => setZip(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="photo_id">Photo ID</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="photo_id">Photo ID</label>
+        <input
           type="text"
           id="photo_id"
           value={photo_id}
           onChange={(e) => setPhoto_id(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="image_url">Image URL</Label>
-        <Input
+      </div>
+    <div>
+        <label htmlFor="image_url">Image URL</label>
+        <input
           type="text"
           id="image_url"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="bio">Bio</Label>
-        <Textarea
+      </div>
+    <div>
+        <label htmlFor="bio">Bio</label>
+        <i
           id="bio"
           value={bio}
           onChange={(e) => setBio(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Button type="submit" disabled={isLoading}>
-          Sign Up
-        </Button>
-      </FormField>
-      {/* {errors.map((error) => (
-        <Error key={error}>{error}</Error>
-      ))} */}
-    </form>
+      </div>
+        <Link to="/home">
+          <button type="submit" disabled={isLoading}>
+            Sign Up
+          </button>
+        </Link>
+</form>
   );
 }
 

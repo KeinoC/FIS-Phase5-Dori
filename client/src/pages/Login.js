@@ -10,9 +10,7 @@ import {UserContext} from "../components/context"
 function Login() {
   const [showLogin, setShowLogin] = useState(true);
 
-  const user = useContext(UserContext)
 
-  console.log(user)
 
 
 

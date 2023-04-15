@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import Sidebar from "../Global/Sidebar.jsx";
 import "./Dashboard.css"
-import UnitCards from "../../Unit/UnitMapCards.jsx"
-import UserContext from "../../context.js"
+// import UnitCards from "../../Unit/UnitMapCards.jsx"
+import { UserContext } from "../../context.js";
 import UserUnitsDash from "../../Unit/UserUnitsDash.jsx";
 import UserApplicationDash from "../../Lease/UserApplicationDash.jsx";
 
 function Dashboard() {
+
+const {user, allUnits, myId} = useContext(UserContext)
+console.log(myId)
 
 const [showUnits, setShowUnits] = useState(false)
 const [showApplications, setShowApplications] = useState(false)
@@ -26,10 +29,10 @@ function toggleShowApplications() {
             <Sidebar />
         <div className="dashboard-container">
             <div className="dash-tag" onClick={toggleShowUnits}>Units</div>
-            {showUnits ? <UserUnitsDash /> : null}
+            {showUnits ? <UserUnitsDash /> : <></>}
             
             <div className="dash-tag" onClick={toggleShowApplications}>Applications</div>
-            {showApplications ? <UserApplicationDash /> : null}
+            {showApplications ? <UserApplicationDash /> : <></>}
         </div>
         </div>
     );

@@ -4,76 +4,22 @@ import "./NewUnitForm.css";
 import { Link } from "react-router-dom";
 
 function NewUnitForm() {
-    const { user } = useContext(UserContext);
+    const { user, myId, setMyId, handleInputChange, handleNewUnitSubmit, newUnitFormData, setNewUnitFormData } = useContext(UserContext)
 
-    console.log(`user: ${UserContext}`);
-
-    const [formData, setFormData] = useState({
-        lessor_id: user.id,
-        // lessor: user,
-        name: "",
-        image_url: "",
-        type: "",
-        unit_num: "",
-        lot: "",
-        street: "",
-        city: "",
-        state: "",
-        zip: "",
-        beds: "",
-        baths: "",
-        sqft: "",
-        price: "",
-    });
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-    };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        fetch("/units", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Success:", data);
-                setFormData({
-                    lessor_id: parseInt(user.id),
-                    // lessor: user,
-                    name: "",
-                    image_url: "",
-                    type: "",
-                    unit_num: "",
-                    lot: "",
-                    street: "",
-                    city: "",
-                    state: "",
-                    zip: "",
-                    beds: "",
-                    baths: "",
-                    sqft: "",
-                    price: "",
-                });
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    };
+        handleNewUnitSubmit(event);
+    }
 
-    const renderInput = (inputName, inputType = "text") => {
+
+    const renderInput = (inputName,) => {
         return (
             <label>
                 {inputName}:
                 <input
-                    type={inputType}
+                    // type={inputType}
                     name={inputName}
-                    value={formData[inputName]}
+                    value={newUnitFormData[inputName]}
                     onChange={handleInputChange}
                 />
             </label>
@@ -92,18 +38,17 @@ function NewUnitForm() {
                 {renderInput("city")}
                 {renderInput("state")}
                 {renderInput("zip")}
-                {renderInput("beds", "number")}
-                {renderInput("baths", "number")}
-                {renderInput("sqft", "number")}
-                {renderInput("price", "number")}
+                {renderInput("beds")}
+                {renderInput("baths")}
+                {renderInput("sqft")}
+                {renderInput("price")}
                 
                 <Link to="/dashboard">
                     <button type="button">Cancel</button>
                 </Link>
 
-                <Link to="/dashboard">
+
                     <button type="submit">Submit</button>
-                </Link>
             </form>
         </>
     );
