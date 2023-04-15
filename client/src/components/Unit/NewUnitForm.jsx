@@ -1,13 +1,15 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../context.js";
 import "./NewUnitForm.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function NewUnitForm() {
     const { user, myId, setMyId, handleInputChange, handleNewUnitSubmit, newUnitFormData, setNewUnitFormData } = useContext(UserContext)
 
-
+    const history = useHistory();
     const handleSubmit = (event) => {
+        event.preventDefault();
+        history.push("/dashboard");
         handleNewUnitSubmit(event);
     }
 
@@ -46,7 +48,6 @@ function NewUnitForm() {
                 <Link to="/dashboard">
                     <button type="button">Cancel</button>
                 </Link>
-
 
                     <button type="submit">Submit</button>
             </form>

@@ -12,6 +12,8 @@ const UserProvider = ({ children }) => {
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [myId, setMyId] = useState("");
 
+    const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("")
+
     const [userUnits, setUserUnits] = useState([]);
     const [pSearchResults, setPSearchResults] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
@@ -289,13 +291,32 @@ const UserProvider = ({ children }) => {
     /////////////////////  CURRENT USER'S UNITS  ////////////////
 
     useEffect(() => {
-        if (user) {
+        if (user && allUnits) {
             const uUnits = allUnits.filter(
                 (unit) => unit.lessor_id === user.id
             );
             setUserUnits(uUnits);
         }
-    }, [allUnits, user, unitToEdit]);
+    }, [allUnits, user]);
+
+
+/////////////// Map View Helpers //////////////////////
+
+function llPhoneById(id) {
+    fetch("/users/" + id)
+        .then((r) => r.json())
+        .then((user) => {
+            setLlPhoneFromMapView(user.phone)
+        });
+}
+
+
+
+
+
+
+
+
 
     //////handle Property search //////////////////
 
@@ -313,12 +334,17 @@ const UserProvider = ({ children }) => {
         setPSearchResults(results);
     }
 
-    useEffect(() => {
-        setFilteredUnits(allUnits);
-    }, [allUnits]);
+    // useEffect(() => {
+    //     if(allUnits) {
+    //     setFilteredUnits(allUnits);
+    //     }
+    // }, [allUnits]);
+
+    console.log(filteredUnits)
+    console.log(allUnits)
 
     useEffect(() => {
-        if (searchState.length === 0 || searchState === "") {
+        if (allUnits & (searchState.length === 0 || searchState === "" || searchState === null)) {
             setFilteredUnits(allUnits);
         } else {
             const fUnits = allUnits.filter((unit) => {
@@ -359,7 +385,7 @@ const UserProvider = ({ children }) => {
             });
             setFilteredUnits(fUnits);
         }
-    }, [searchState, allUnits]);
+    }, [searchState, allUnits, user]);
 
     // need to use useEffect to set up address concatenation and set it some a state that's an array of objects with lat/long
 
@@ -432,6 +458,10 @@ const UserProvider = ({ children }) => {
                 myId,
                 setMyId,
                 handleInputChange,
+                llPhoneById,
+                llPhoneFromMapView,
+                setLlPhoneFromMapView,
+        
             }}
         >
             {children}
