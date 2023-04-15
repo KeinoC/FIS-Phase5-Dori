@@ -5,8 +5,10 @@ import UnitFeaturedCards from "../../Unit/UnitFeaturedCards.jsx";
 import "./Home.css";
 
 function Home() {
-    const { updateSearch } = useContext(UserContext);
+    const { updateSearch, user } = useContext(UserContext);
     const history = useHistory();
+
+    console.log(user)
 
     const handleSubmit = (e) => {
         console.log("click");

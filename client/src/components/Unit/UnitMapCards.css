@@ -9,10 +9,9 @@
     width: 35vw;
     overflow: scroll;
     overscroll-behavior: auto;
-    position:absolute;
+    position: absolute;
 
-    right:1vw;
-    
+    right: 1vw;
 }
 
 .unit-card-div {
@@ -34,15 +33,14 @@
 .unit-card-image {
     display: block;
     object-fit: cover;
-    min-width: 15vw;
-    max-width: 15vw;
-    max-height: 25vh;
+    width: 15vw;
+    height: 25vh;
     position: relative;
 }
 
 .unit-card-info {
-    font-size: .7rem;
-    padding: .5rem;
+    font-size: 0.7rem;
+    padding: 0.5rem;
 
     max-width: 15vw;
     position: relative;
@@ -65,4 +63,22 @@
 
 li {
     list-style-type: none;
+}
+
+.bookmark-ph {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: .5;
+    border: none;
+    background-color: gray;
+    padding: 3%;
+    border-radius: 5px;
+    color: white;
+}
+
+.bookmark-ph:hover {
+    transform: scale(1.1);
+    color: salmon;
+    opacity: 1;
 }

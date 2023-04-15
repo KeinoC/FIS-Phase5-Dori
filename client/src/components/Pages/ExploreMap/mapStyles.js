@@ -1,10 +1,21 @@
+
+const mapLandscape = "#f5f5f5"
+const mapHighway = "#f0c61f"
+const mapPoi = "#036b61"
+const secondaryMap = ""
+const roadsMap = ""
+const markersMap = ""
+const waterMap = "#02414d"
+const dark = "#3b3934"
+
+
 export default [
     {
         featureType: "water",
         elementType: "geometry",
         stylers: [
             {
-                color: "#004358",
+                color: waterMap,
             },
         ],
     },
@@ -13,7 +24,7 @@ export default [
         elementType: "geometry",
         stylers: [
             {
-                color: "#1f8a70",
+                color: dark,
             },
         ],
     },
@@ -22,7 +33,7 @@ export default [
         elementType: "geometry",
         stylers: [
             {
-                color: "#1f8a70",
+                color: mapPoi,
             },
         ],
     },
@@ -31,7 +42,7 @@ export default [
         elementType: "geometry",
         stylers: [
             {
-                color: "#fd7400",
+                color: mapHighway,
             },
         ],
     },
@@ -40,7 +51,7 @@ export default [
         elementType: "geometry",
         stylers: [
             {
-                color: "#1f8a70",
+                color: "#3b3934",
             },
             {
                 lightness: -20,
@@ -52,7 +63,7 @@ export default [
         elementType: "geometry",
         stylers: [
             {
-                color: "#1f8a70",
+                color: "#3b3934",
             },
             {
                 lightness: -17,
@@ -106,7 +117,7 @@ export default [
         elementType: "geometry",
         stylers: [
             {
-                color: "#1f8a70",
+                color: "#3b3934",
             },
             {
                 lightness: -10,
@@ -119,7 +130,7 @@ export default [
         elementType: "geometry",
         stylers: [
             {
-                color: "#1f8a70",
+                color: "#3b3934",
             },
             {
                 weight: 0.7,

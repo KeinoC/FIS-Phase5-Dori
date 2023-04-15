@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+
+import React, {useState, useContext, useEffect} from "react";
 import Sidebar from "../Global/Sidebar.jsx";
-import "./Dashboard.css";
-import UnitCards from "../../Unit/UnitMapCards.jsx";
-import { UserContext } from "../../context";
+import "./Dashboard.css"
+// import UnitCards from "../../Unit/UnitMapCards.jsx"
+import { UserContext } from "../../context.js";
+
 import UserUnitsDash from "../../Unit/UserUnitsDash.jsx";
 import UserApplicationDash from "../../Lease/UserApplicationDash.jsx";
 
@@ -10,8 +12,12 @@ function Dashboard() {
     const { user, userApplications, userUnits, userUnitCount, userApplicationCount } =
         useContext(UserContext);
 
-    const [showUnits, setShowUnits] = useState(false);
-    const [showApplications, setShowApplications] = useState(false);
+const {user, allUnits, myId} = useContext(UserContext)
+console.log(myId)
+
+const [showUnits, setShowUnits] = useState(false)
+const [showApplications, setShowApplications] = useState(false)
+
 
     function toggleShowUnits() {
         showUnits ? setShowUnits(false) : setShowUnits(true);
@@ -31,25 +37,14 @@ function Dashboard() {
         <div className="dashboard-page">
             <Sidebar />
 
-            {/* conditionally rendering user units */}
-            {userUnitCount > 0 ? (
-                <div className="dashboard-container">
-                    <div className="dash-tag" onClick={toggleShowUnits}>
-                        Units {userUnitCount}
-                    </div>
-                    {showUnits ? <UserUnitsDash /> : null}
-                </div>
-            ) : null}
+        <div className="dashboard-container">
+            <div className="dash-tag" onClick={toggleShowUnits}>Units</div>
+            {showUnits ? <UserUnitsDash /> : <></>}
+            
+            <div className="dash-tag" onClick={toggleShowApplications}>Applications</div>
+            {showApplications ? <UserApplicationDash /> : <></>}
+        </div>
 
-            {/* conditionally rendering user applications */}
-            {userApplicationCount > 0 ? (
-                <div className="dashboard-container">
-                    <div className="dash-tag" onClick={toggleShowApplications}>
-                        Applications
-                    </div>
-                    {showApplications ? <UserApplicationDash /> : null}
-                </div>
-            ) : null}
         </div>
     );
 }

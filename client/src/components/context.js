@@ -5,11 +5,15 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [allUnits, setAllUnits] = useState([]);
+    
 
     const [allApplications, setAllApplications] = useState(null);
     const [userApplications, setUserApplications] = useState(null);
     const [selectedApplication, setSelectedApplication] = useState(null);
-    const [userApplicationCount, setUserApplicationCount] = useState(0);
+    const [myId, setMyId] = useState("");
+
+    const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("")
+
 
     const [userUnits, setUserUnits] = useState([]);
     const [userUnitCount, setUserUnitCount] = useState(0);
@@ -24,6 +28,65 @@ const UserProvider = ({ children }) => {
     const [currentAppLessorId, setCurrentAppLessorId] = useState(
         currentAppUnit ? currentAppUnit.lessor_id : ""
     );
+
+    const [newUnitFormData, setNewUnitFormData] = useState({
+        lessor_id: myId ? myId : "",
+        // lessor: user,
+
+        name: "",
+        image_url: "",
+        type: "",
+        unit_num: "",
+        lot: "",
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        beds: "",
+        baths: "",
+        sqft: "",
+        price: "",
+    });
+
+    /////////////////////// new unit ///////////////////////// 
+
+
+    const handleNewUnitSubmit = (event) => {
+        event.preventDefault();
+        fetch("/units", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUnitFormData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                setNewUnitFormData({
+                    lessor_id: myId,
+                    // lessor: user,
+                    name: "",
+                    image_url: "",
+                    type: "",
+                    unit_num: "",
+                    lot: "",
+                    street: "",
+                    city: "",
+                    state: "",
+                    zip: "",
+                    beds: "",
+                    baths: "",
+                    sqft: "",
+                    price: "",
+                });
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
+
+
 
     ///////////////////////  UNIT EDIT  /////////////////////////
     const [unitToEdit, setUnitToEdit] = useState(null);
@@ -42,6 +105,7 @@ const UserProvider = ({ children }) => {
         sqft: "",
         price: "",
     });
+
 
     useEffect(() => {
         if (unitToEdit) {
@@ -98,10 +162,13 @@ const UserProvider = ({ children }) => {
             if (r.ok) {
                 r.json().then((user) => {
                     setUser(user);
+                    setMyId(user.id);
                 });
             }
         });
     }, []);
+
+
 
     ///////////////////// UNITS BY ID //////////////////////////
 
@@ -116,13 +183,15 @@ const UserProvider = ({ children }) => {
     }, [currentAppLessorId]);
 
     useEffect(() => {
-        if (user && currentAppUnit) {
+
+        if (user) {
             setCurrentAppUnit((prevState) => ({
                 ...prevState,
                 lessee_id: user.id,
             }));
         }
-    }, [user, currentAppUnit]);
+    }, [user]);
+
 
     useEffect(() => {
         // fetch allUnits
@@ -138,8 +207,36 @@ const UserProvider = ({ children }) => {
                 });
             }
         });
+    }, []);
+
+    useEffect(() => {
+        if (user) {
+            setNewUnitFormData((prevState) => ({
+                ...prevState,
+                lessor_id: user.id,
+            }));
+        }
     }, [user]);
-    
+
+
+    /////////////////////// New Unit Post request
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        const updated = { ...newUnitFormData, [name]: value }
+        setNewUnitFormData(updated)
+    };
+
+
+
+
+
+
+
+
+
+
+
     ////////////////////////////////////////////////////////////
     ///////////////////// Applications /////////////////////////
 
@@ -227,20 +324,28 @@ const UserProvider = ({ children }) => {
             console.log(uLength);
             setUserUnitCount(uLength);
         }
-    }, [userUnits]);
 
-    useEffect(() => {
-        if (userApplications) {
-            setUserApplicationCount(userApplications.length);
-        }
-    }, [userApplications]);
+    }, [allUnits, user]);
 
 
-    console.log(user)
-    console.log(allUnits)
-    // console.log(allUnits.filter(unit => unit.lessor_id === user.id));
-    console.log(userUnits);
-    console.log(userUnitCount);
+/////////////// Map View Helpers //////////////////////
+
+function llPhoneById(id) {
+    fetch("/users/" + id)
+        .then((r) => r.json())
+        .then((user) => {
+            setLlPhoneFromMapView(user.phone)
+        });
+}
+
+
+
+
+
+
+
+
+
 
     //////handle Property search //////////////////
 
@@ -258,12 +363,17 @@ const UserProvider = ({ children }) => {
         setPSearchResults(results);
     }
 
-    useEffect(() => {
-        setFilteredUnits(allUnits);
-    }, [allUnits]);
+    // useEffect(() => {
+    //     if(allUnits) {
+    //     setFilteredUnits(allUnits);
+    //     }
+    // }, [allUnits]);
+
+    console.log(filteredUnits)
+    console.log(allUnits)
 
     useEffect(() => {
-        if (searchState.length === 0 || searchState === "") {
+        if (allUnits & (searchState.length === 0 || searchState === "" || searchState === null)) {
             setFilteredUnits(allUnits);
         } else {
             const fUnits = allUnits.filter((unit) => {
@@ -304,7 +414,7 @@ const UserProvider = ({ children }) => {
             });
             setFilteredUnits(fUnits);
         }
-    }, [searchState, allUnits]);
+    }, [searchState, allUnits, user]);
 
     // need to use useEffect to set up address concatenation and set it some a state that's an array of objects with lat/long
 
@@ -371,8 +481,16 @@ const UserProvider = ({ children }) => {
                 setUserApplications,
                 selectedApplication,
                 setSelectedApplication,
-                userUnits,
-                userApplicationCount,
+                handleNewUnitSubmit,
+                newUnitFormData,
+                setNewUnitFormData,
+                myId,
+                setMyId,
+                handleInputChange,
+                llPhoneById,
+                
+        
+
             }}
         >
             {children}

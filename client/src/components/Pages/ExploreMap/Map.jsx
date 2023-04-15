@@ -8,6 +8,8 @@ import {
 } from "react-google-maps";
 // import * as parkData from "./data/skateboard-parks.json";
 import mapStyles from "./mapStyles";
+import Geocode from 'react-geocode';
+Geocode.setApiKey('AIzaSyAF9-RxPwZDzrJQnOx4P_W8yM-Mhtf-9B8');
 
 function Map() {
     // const [selectedPark, setSelectedPark] = useState(null);
@@ -27,8 +29,8 @@ function Map() {
 
     return (
         <GoogleMap
-            defaultZoom={10}
-            defaultCenter={{ lat: 45.4211, lng: -75.6903 }}
+            defaultZoom={12}
+            defaultCenter={{ lat: 40.6782, lng: -73.9442 }}
             defaultOptions={{ styles: mapStyles }}
         >
             {/* {parkData.features.map((park) => ( */}

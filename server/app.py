@@ -110,7 +110,7 @@ def update_user(id):
     for key, value in data.items():
         setattr(user, key, value)
     db.session.commit()
-    return jsonify(user.serialize())
+    return jsonify(user.to_dict()) #watch
     
 
 class Login(Resource):
@@ -151,19 +151,16 @@ class Logout(Resource):
 def create_unit():
     data = request.get_json()
 
-    lessor_id = data.pop('lessor_id')
-    # lessor = Lessor.query.get(lessor_id)
-
     unit = Unit(**data)
     # unit.lessor = lessor
 
     db.session.add(unit)
     db.session.commit()
-    return jsonify(unit.serialize(rules=("user",))), 201
 
-    ### to ensure the lessor relationship is properly loaded before serializing
+    # return jsonify(unit.serialize()), 201
 
-    # unit = Unit.query.options(joinedload(Unit.lessor)).get(unit.id)
+
+
     return jsonify(unit.serialize()), 201
 
 # Get all units
