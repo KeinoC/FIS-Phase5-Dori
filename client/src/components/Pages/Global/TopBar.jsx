@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "../../../styles";
 // import Login from "../../../pages/Login";
 import {useHistory} from "react-router-dom";
 import  {UserContext}  from "../../context.js";
@@ -46,17 +45,19 @@ function NavBar() {
           Explore
         </button>
         </a>
-
+        {!user ?
         <a href="/login">
         <button variant="outline">
           Login
         </button>
         </a>
-        <Link to="/landing">
+:
+        <Link to="/login">
         <button variant="outline" onClick={handleLogoutClick}>
           Logout
         </button>
         </Link>
+}
       </nav>
 
       </div>

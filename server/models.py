@@ -13,6 +13,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     serialize_rules = ('-_password_hash',)
+    unit_id = db.Column(db.Integer, db.ForeignKey('units.id'))
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
@@ -36,6 +37,7 @@ class User(db.Model, SerializerMixin):
 
     def serialize(self):
         return {
+            'units': [unit.serialize() for unit in self.units],
             'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
@@ -55,6 +57,13 @@ class User(db.Model, SerializerMixin):
             'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'), # Format to YYYY-MM-DD HH:MM:SS
             'updated_at': self.updated_at.strftime('%Y-%m-%d %H:%M:%S'), # Format to YYYY-MM-DD HH:MM:SS
 }
+
+#relationships
+    units = db.relationship('Unit', backref='user', lazy='joined')
+    units = association_proxy("users", 'unit')
+
+
+
 
     @hybrid_property
     def password_hash(self):
@@ -83,7 +92,7 @@ class Lessor (db.Model, SerializerMixin):
 
 
     #relationships
-    user = db.relationship('User', backref='lessors')
+    # user = db.relationship('User', backref='lessors') ## watch put back?
 
     def __repr__(self):
         return f'<Lessor {self.id}: {self.name}>'
@@ -131,7 +140,9 @@ class Unit (db.Model, SerializerMixin):
     #relationships
     # lessor = db.relationship('Lessor', backref='units', lazy='joined')
     unit_applications = db.relationship('UnitApplication', backref='unit', lazy='joined')
+    users = db.relationship('User', backref='units', lazy='joined')
     lessees = association_proxy('unit_applications', 'lessee')
+    users = association_proxy('unit_applications', 'user')
     serialize_rules = ("-unit_applications.unit",)
 
     def __repr__(self):
