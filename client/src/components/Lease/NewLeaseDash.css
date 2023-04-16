@@ -1,0 +1,157 @@
+.new-lease-dash {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(240, 255, 255);
+}
+
+.lease-intro-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    height: 30vh;
+    width: 20vw;
+    padding: 3%;
+    margin: 1%;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+    0 2px 2px rgba(0,0,0,0.15), 
+    0 4px 4px rgba(0,0,0,0.15), 
+    0 8px 8px rgba(0,0,0,0.15);
+}
+
+
+/* baseline hover styling for all cards on this component */
+.lease-intro-container:hover, .new-lease-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.11), 
+    0 2px 2px rgba(0,0,0,0.11), 
+    0 4px 4px rgba(0,0,0,0.11), 
+    0 8px 8px rgba(0,0,0,0.11), 
+    0 16px 16px rgba(0,0,0,0.11), 
+    0 32px 32px rgba(0,0,0,0.11);
+}
+
+.lease-intro-container label {
+    font-size: 24px;
+}
+
+.lease-intro-container button {
+    margin-top: 16px;
+    padding: 8px 16px;
+    border: none;
+    background-color: teal;
+    color: whitesmoke;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.lease-intro-container button:hover {
+    background-color: rgb(4, 184, 184);
+}
+
+/* ///////////////// after intro view //////////////////*/
+
+.lease-progress-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(240, 255, 255);
+}
+
+.new-lease-header {
+    width: 100vw;
+    position: relative;
+    text-align: center;
+}
+
+.new-lease-card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    background-color: rgb(240, 255, 255);
+    padding: 3%;
+    margin: 1%;
+}
+
+.new-lease-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 20vw;
+    /* padding: 3%; */
+    margin: 1%;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+    0 2px 2px rgba(0,0,0,0.15), 
+    0 4px 4px rgba(0,0,0,0.15), 
+    0 8px 8px rgba(0,0,0,0.15);
+}
+
+.lease-card-face {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    width: 20vw;
+    height: 50vh;
+    z-index: 1;
+    position: relative;
+
+}
+
+
+.lease-card.head {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+
+}
+
+.span-rotate {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+.lease-card-head2 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
+    align-content: center;
+width: 20%; /*if changed, also change other places*/
+height: 100%; /*if changed, also change other places*/
+}
+
+.lease-display-area {
+    text-align: center;
+    vertical-align: middle;
+    align-content: center;
+width: 80%; /*if changed, also change other places*/
+height: 100%; /*if changed, also change other places*/
+}
+
+.lease-card-body {
+    display: none;
+}
+
+
+
