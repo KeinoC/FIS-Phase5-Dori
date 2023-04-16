@@ -1,18 +1,18 @@
 import React, { useEffect, useState, createContext } from "react";
+import Geocode from 'react-geocode';
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [allUnits, setAllUnits] = useState([]);
-    
 
     const [allApplications, setAllApplications] = useState(null);
     const [userApplications, setUserApplications] = useState(null);
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [myId, setMyId] = useState("");
 
-    const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("")
+    const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("");
 
     const [userUnits, setUserUnits] = useState([]);
     const [pSearchResults, setPSearchResults] = useState([]);
@@ -44,8 +44,7 @@ const UserProvider = ({ children }) => {
         price: "",
     });
 
-    /////////////////////// new unit ///////////////////////// 
-
+    /////////////////////// new unit /////////////////////////
 
     const handleNewUnitSubmit = (event) => {
         event.preventDefault();
@@ -81,8 +80,6 @@ const UserProvider = ({ children }) => {
                 console.error("Error:", error);
             });
     };
-
-
 
     ///////////////////////  UNIT EDIT  /////////////////////////
     const [unitToEdit, setUnitToEdit] = useState(null);
@@ -163,8 +160,6 @@ const UserProvider = ({ children }) => {
         });
     }, []);
 
-
-
     ///////////////////// UNITS BY ID //////////////////////////
 
     useEffect(() => {
@@ -204,23 +199,13 @@ const UserProvider = ({ children }) => {
         }
     }, [user]);
 
-
     /////////////////////// New Unit Post request
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        const updated = { ...newUnitFormData, [name]: value }
-        setNewUnitFormData(updated)
+        const updated = { ...newUnitFormData, [name]: value };
+        setNewUnitFormData(updated);
     };
-
-
-
-
-
-
-
-
-
 
     ////////////////////////////////////////////////////////////
     ///////////////////// Applications /////////////////////////
@@ -299,24 +284,32 @@ const UserProvider = ({ children }) => {
         }
     }, [allUnits, user]);
 
+    /////////////////////////////////////////////////////////
+    /////////////// Map View Helpers //////////////////////
 
-/////////////// Map View Helpers //////////////////////
+    function llPhoneById(id) {
+        fetch("/users/" + id)
+            .then((r) => r.json())
+            .then((user) => {
+                setLlPhoneFromMapView(user.phone);
+            });
+    }
 
-function llPhoneById(id) {
-    fetch("/users/" + id)
-        .then((r) => r.json())
-        .then((user) => {
-            setLlPhoneFromMapView(user.phone)
-        });
-}
+    ////// address to lat/long for map view
 
+    const getCoordinates = async (address) => {
+        try {
+            const response = await Geocode.fromAddress(address);
+            const { lat, lng } = response.results[0].geometry.location;
+            return { lat, lng };
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    };
 
-
-
-
-
-
-
+    const testAddy = "1738 brooklyn Avenue brooklyn, ny 11210"
+    console.log(getCoordinates(testAddy))
 
     //////handle Property search //////////////////
 
@@ -340,11 +333,14 @@ function llPhoneById(id) {
     //     }
     // }, [allUnits]);
 
-    console.log(filteredUnits)
-    console.log(allUnits)
 
     useEffect(() => {
-        if (allUnits & (searchState.length === 0 || searchState === "" || searchState === null)) {
+        if (
+            allUnits &
+            (searchState.length === 0 ||
+                searchState === "" ||
+                searchState === null)
+        ) {
             setFilteredUnits(allUnits);
         } else {
             const fUnits = allUnits.filter((unit) => {
@@ -459,8 +455,6 @@ function llPhoneById(id) {
                 setMyId,
                 handleInputChange,
                 llPhoneById,
-                
-        
             }}
         >
             {children}
