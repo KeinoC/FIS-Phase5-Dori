@@ -111,6 +111,7 @@ function NewLeaseForm() {
                     value={leaseData.lessee_id}
                     onChange={handleInputChange}
                 />
+                <label>Unit ID</label>
                 <input
                     label="Unit ID:"
                     id="unit_id"
@@ -119,6 +120,7 @@ function NewLeaseForm() {
                     value={leaseData.unit_id}
                     onChange={handleInputChange}
                 />
+                <label>Monthly Rent</label>
                 <input
                     label="Rent:"
                     id="rent"
@@ -127,6 +129,7 @@ function NewLeaseForm() {
                     value={leaseData.rent}
                     onChange={handleInputChange}
                 />
+                <label>Security Deposit</label>
                 <input
                     label="Security Deposit:"
                     id="sec_deposit"
@@ -135,6 +138,7 @@ function NewLeaseForm() {
                     value={leaseData.sec_deposit}
                     onChange={handleInputChange}
                 />
+                <label>Bedrooms</label>
                 <input
                     label="Beds:"
                     id="beds"
@@ -143,6 +147,7 @@ function NewLeaseForm() {
                     value={leaseData.beds}
                     onChange={handleInputChange}
                 />
+                <label>Bathrooms</label>
                 <input
                     label="Baths:"
                     id="baths"
@@ -151,6 +156,7 @@ function NewLeaseForm() {
                     value={leaseData.baths}
                     onChange={handleInputChange}
                 />
+                <label>Square Footage</label>
                 <input
                     label="Square Feet:"
                     id="sqft"
@@ -159,6 +165,7 @@ function NewLeaseForm() {
                     value={leaseData.sqft}
                     onChange={handleInputChange}
                 />
+                <label>Type</label>
                 <input
                     label="Type:"
                     id="type"
@@ -167,6 +174,7 @@ function NewLeaseForm() {
                     value={leaseData.type}
                     onChange={handleInputChange}
                 />
+                <label>Utilities Included</label>
                 <input
                     label="Utilities Included:"
                     id="util_incld"
@@ -183,6 +191,7 @@ function NewLeaseForm() {
                     value={leaseData.util_excld}
                     onChange={handleInputChange}
                 />
+                <label>House #</label>
                 <input
                     label="Lot:"
                     id="lot"
@@ -191,6 +200,7 @@ function NewLeaseForm() {
                     value={leaseData.lot}
                     onChange={handleInputChange}
                 />
+                <label>Street</label>
                 <input
                     label="Street:"
                     id="street"
@@ -199,6 +209,7 @@ function NewLeaseForm() {
                     value={leaseData.street}
                     onChange={handleInputChange}
                 />
+                <label>Unit #</label>
                 <input
                     label="Unit Number:"
                     id="unit_num"
@@ -207,6 +218,7 @@ function NewLeaseForm() {
                     value={leaseData.unit_num}
                     onChange={handleInputChange}
                 />
+                <label>City</label>
                 <input
                     label="City:"
                     id="city"
@@ -215,6 +227,7 @@ function NewLeaseForm() {
                     value={leaseData.city}
                     onChange={handleInputChange}
                 />
+                <label>State</label>
                 <input
                     label="State:"
                     id="state"
@@ -223,6 +236,7 @@ function NewLeaseForm() {
                     value={leaseData.state}
                     onChange={handleInputChange}
                 />
+                <label>Zip</label>
                 <input
                     label="Zip:"
                     id="zip"
