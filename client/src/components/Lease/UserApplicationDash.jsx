@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context.js";
-console.log("test")
 
 function UserApplicationDash() {
     const {

@@ -18,29 +18,23 @@
     margin: 1%;
     border-radius: 4px;
     background-color: white;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
-    0 2px 2px rgba(0,0,0,0.15), 
-    0 4px 4px rgba(0,0,0,0.15), 
-    0 8px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15),
+        0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
 }
 
-
 /* baseline hover styling for all cards on this component */
-.lease-intro-container:hover, .new-lease-card:hover {
-    transform: scale(1.01);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.11), 
-    0 2px 2px rgba(0,0,0,0.11), 
-    0 4px 4px rgba(0,0,0,0.11), 
-    0 8px 8px rgba(0,0,0,0.11), 
-    0 16px 16px rgba(0,0,0,0.11), 
-    0 32px 32px rgba(0,0,0,0.11);
+.lease-intro-container:hover,
+.new-lease-card:hover {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.11),
+        0 4px 4px rgba(0, 0, 0, 0.11), 0 8px 8px rgba(0, 0, 0, 0.11),
+        0 16px 16px rgba(0, 0, 0, 0.11), 0 32px 32px rgba(0, 0, 0, 0.11);
 }
 
 .lease-intro-container label {
     font-size: 24px;
 }
 
-.lease-intro-container button {
+.lease-intro-container button, .next-button  {
     margin-top: 16px;
     padding: 8px 16px;
     border: none;
@@ -82,50 +76,124 @@
     background-color: rgb(240, 255, 255);
     padding: 3%;
     margin: 1%;
+    position: relative;
 }
 
 .new-lease-card {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 50vh;
-    width: 20vw;
-    /* padding: 3%; */
+    height: 60vh;
+    width: 30vw;
     margin: 1%;
     border-radius: 4px;
     background-color: white;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
-    0 2px 2px rgba(0,0,0,0.15), 
-    0 4px 4px rgba(0,0,0,0.15), 
-    0 8px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15),
+        0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
+    /* transform: translateX(-0%); */
+    /* transition: transform 0.3s ease-in-out;
+    animation-duration: .2s; */
 }
+
+
+
+
+.active {
+    background-color:rgb(4, 184, 184);
+}
+
+.lcard4 {
+    left: 1vw;
+    z-index: 1;
+}
+
+.lcard3 {
+    left: 4vw;
+    z-index: 2;
+}
+
+.lcard2 {
+    left: 7vw;
+    z-index: 3;
+}
+
+.lcard1 {
+    left: 10vw;
+    z-index: 4;
+}
+
+
+.lcard1-right {
+    position: absolute;
+    right:1vw;
+    z-index: 1;
+    transform: translateX(-40%);
+}
+
+.lcard2-right {
+    position: absolute;
+    right:4vw;
+    z-index: 2;
+}
+
+.lcard3-right {
+    position: absolute;
+    right:7vw;
+    z-index: 3;
+}
+
+
+/* .new-lease-card:hover {
+    transform: translateX(0%);
+} */
+
+
+.lease-current-section-from-left {
+    position: absolute !important;
+    height: 80vh !important;
+    width: 50vw !important;
+    top: -260%;
+    left: 20%;
+    transform: translateY(-15%);
+    z-index: 6;
+    transition: transform .3s ease-out;
+}
+
+/* .lease-current-section-from-right {
+    position: absolute !important;
+    height: 80vh !important;
+    width: 50vw !important;
+    right: 20%;
+    transform: translateX(-40%);
+    z-index: 6;
+    transition: transform .5s ease-out;
+} */
+
 
 .lease-card-face {
     display: flex;
     flex-direction: row;
     align-content: center;
-    width: 20vw;
-    height: 50vh;
-    z-index: 1;
+    width: 100%;
+    height: 90%;
+    /* z-index: 1; */
     position: relative;
-
 }
-
 
 .lease-card.head {
     display: flex;
     align-items: center;
-    width: 80%;
+    width: 90%;
     height: 100%;
     z-index: 1;
     position: absolute;
     top: 0;
-
 }
 
 .span-rotate {
+    width: 10%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%) rotate(-90deg);
@@ -137,21 +205,22 @@
     text-align: center;
     vertical-align: middle;
     align-content: center;
-width: 20%; /*if changed, also change other places*/
-height: 100%; /*if changed, also change other places*/
+    width: 10%;
+    /*if changed, also change other places*/
+    height: 100%;
+    /*if changed, also change other places*/
 }
 
 .lease-display-area {
     text-align: center;
     vertical-align: middle;
     align-content: center;
-width: 80%; /*if changed, also change other places*/
-height: 100%; /*if changed, also change other places*/
+    width: 90%;
+    /*if changed, also change other places*/
+    height: 90%;
+    /*if changed, also change other places*/
 }
 
 .lease-card-body {
     display: none;
 }
-
-
-

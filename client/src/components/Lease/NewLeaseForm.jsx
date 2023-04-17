@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import {UserContext} from "../context.js";
+import "./NewLeaseForm.css"
 
 
 
@@ -90,10 +91,10 @@ function NewLeaseForm() {
     };
 
     return (
-        <div>
-            <h2>Create a New Lease</h2>
+        <div className="form-container">
             <form onSubmit={handleSubmit}>
-                <Input
+                <label>Lesser ID:</label>
+                <input
                     label="Lessor ID:"
                     id="lessor_id"
                     name="lessor_id"
@@ -101,7 +102,8 @@ function NewLeaseForm() {
                     value={leaseData.lessor_id}
                     onChange={handleInputChange}
                 />
-                <Input
+                <label>Lessee ID:</label>
+                <input
                     label="Lessee ID:"
                     id="lessee_id"
                     name="lessee_id"
@@ -109,7 +111,7 @@ function NewLeaseForm() {
                     value={leaseData.lessee_id}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Unit ID:"
                     id="unit_id"
                     name="unit_id"
@@ -117,7 +119,7 @@ function NewLeaseForm() {
                     value={leaseData.unit_id}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Rent:"
                     id="rent"
                     name="rent"
@@ -125,7 +127,7 @@ function NewLeaseForm() {
                     value={leaseData.rent}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Security Deposit:"
                     id="sec_deposit"
                     name="sec_deposit"
@@ -133,7 +135,7 @@ function NewLeaseForm() {
                     value={leaseData.sec_deposit}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Beds:"
                     id="beds"
                     name="beds"
@@ -141,7 +143,7 @@ function NewLeaseForm() {
                     value={leaseData.beds}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Baths:"
                     id="baths"
                     name="baths"
@@ -149,7 +151,7 @@ function NewLeaseForm() {
                     value={leaseData.baths}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Square Feet:"
                     id="sqft"
                     name="sqft"
@@ -157,7 +159,7 @@ function NewLeaseForm() {
                     value={leaseData.sqft}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Type:"
                     id="type"
                     name="type"
@@ -165,7 +167,7 @@ function NewLeaseForm() {
                     value={leaseData.type}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Utilities Included:"
                     id="util_incld"
                     name="util_incld"
@@ -173,15 +175,15 @@ function NewLeaseForm() {
                     value={leaseData.util_incld}
                     onChange={handleInputChange}
                 />
-                <Input
-                    label="Utilities Excluded:"
+                    <label>Utilities Excluded</label>
+                <input
                     id="util_excld"
                     name="util_excld"
                     type="text"
                     value={leaseData.util_excld}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Lot:"
                     id="lot"
                     name="lot"
@@ -189,7 +191,7 @@ function NewLeaseForm() {
                     value={leaseData.lot}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Street:"
                     id="street"
                     name="street"
@@ -197,7 +199,7 @@ function NewLeaseForm() {
                     value={leaseData.street}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Unit Number:"
                     id="unit_num"
                     name="unit_num"
@@ -205,7 +207,7 @@ function NewLeaseForm() {
                     value={leaseData.unit_num}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="City:"
                     id="city"
                     name="city"
@@ -213,7 +215,7 @@ function NewLeaseForm() {
                     value={leaseData.city}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="State:"
                     id="state"
                     name="state"
@@ -221,7 +223,7 @@ function NewLeaseForm() {
                     value={leaseData.state}
                     onChange={handleInputChange}
                 />
-                <Input
+                <input
                     label="Zip:"
                     id="zip"
                     name="zip"
@@ -229,7 +231,7 @@ function NewLeaseForm() {
                     value={leaseData.zip}
                     onChange={handleInputChange}
                 />
-                <button type="submit">Create Lease</button>
+                {/* <button type="submit">Create Lease</button> */}
             </form>
         </div>
     );
