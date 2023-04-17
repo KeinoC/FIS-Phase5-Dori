@@ -27,7 +27,7 @@ class User(db.Model, SerializerMixin):
     city = db.Column(db.String, nullable=False)
     state = db.Column(db.String, nullable=False)
     zip = db.Column(db.String, nullable=False)
-    photo_id = db.Column(db.String, unique=True, nullable=False)
+    photo_id = db.Column(db.String)
     image_url = db.Column(db.String)
     bio = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -183,10 +183,15 @@ class UnitApplication (db.Model, SerializerMixin):
             unit_data = self.unit.serialize()
         else:
             unit_data = {'error': 'Unit not found'}
+        if self.lessee is not None:
+            lessee_data = self.lessee.serialize()
+        else:
+            lessee_data = {'error': 'Lessee not found'}
 
         data = {
             'id': self.id,
             'lessee_id': self.lessee_id,
+            'lessee' : lessee_data,
             'unit_id': self.unit_id,
             'unit': unit_data,
             'status': self.status,

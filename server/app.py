@@ -156,7 +156,6 @@ def create_unit():
 
     db.session.add(unit)
     db.session.commit()
-    # return jsonify(unit.serialize()), 201
 
 
     return jsonify(unit.serialize()), 201
@@ -291,55 +290,12 @@ def delete_lease(id):
     return jsonify({'message': 'Lease deleted'}), 200
 
 
-
-#################### RecipeIndex ####################
-# class RecipeIndex(Resource):
-
-#     def get(self):
-
-#         if session.get('user_id'):
-
-#             user = User.query.filter(User.id == session['user_id']).first()
-
-#             return [recipe.to_dict() for recipe in user.recipes], 200
-        
-#         return {'error': '401 Unauthorized'}, 401
-        
-#     def post(self):
-
-#         if session.get('user_id'):
-
-#             request_json = request.get_json()
-
-#             title = request_json['title']
-#             instructions = request_json['instructions']
-#             minutes_to_complete = request_json['minutes_to_complete']
-
-#             try:
-
-#                 recipe = Recipe(
-#                     title=title,
-#                     instructions=instructions,
-#                     minutes_to_complete=minutes_to_complete,
-#                     user_id=session['user_id'],
-#                 )
-
-#                 db.session.add(recipe)
-#                 db.session.commit()
-
-#                 return recipe.to_dict(), 201
-
-#             except IntegrityError:
-
-#                 return {'error': '422 Unprocessable Entity'}, 422
-
-#         return {'error': '401 Unauthorized'}, 401
-
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 
-
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
+
