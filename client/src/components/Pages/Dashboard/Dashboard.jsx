@@ -1,10 +1,12 @@
 import React, {useState, useContext, useEffect} from "react";
 import Sidebar from "../Global/Sidebar.jsx";
+import RentChart from "./RentChart.jsx";
 import "./Dashboard.css"
 // import UnitCards from "../../Unit/UnitMapCards.jsx"
 import { UserContext } from "../../context.js";
 import UserUnitsDash from "../../Unit/UserUnitsDash.jsx";
 import UserApplicationDash from "../../Lease/UserApplicationDash.jsx";
+
 
 function Dashboard() {
 
@@ -28,6 +30,7 @@ function toggleShowApplications() {
         <div className="dashboard-page">
             <Sidebar />
         <div className="dashboard-container">
+            <RentChart />
             <div className="dash-tag" onClick={toggleShowUnits}>Units</div>
             {showUnits ? <UserUnitsDash /> : <></>}
             

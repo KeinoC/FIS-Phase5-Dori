@@ -27,6 +27,10 @@ function NavBar() {
     setFilteredUnits(allUnits)
   }
 
+const keinoUrl = "https://media.licdn.com/dms/image/D4E03AQFfeQmJjk6LIQ/profile-displayphoto-shrink_800_800/0/1671663647371?e=1687392000&v=beta&t=ZWFM9Gk5fRlnvyM-yO_U5hXgGEXWdwGrhwxjnzue2nU"
+
+
+
   return (
       <div className = "top-bar">
 
@@ -47,16 +51,26 @@ function NavBar() {
         </button>
         </a>
 
+        {!user ?
         <a href="/login">
         <button variant="outline">
           Login
         </button>
         </a>
+        :
         <Link to="/landing">
         <button variant="outline" onClick={handleLogoutClick}>
           Logout
         </button>
         </Link>
+        }
+        {user ?
+            <div className = "top-avatar-container">
+                <img className = "top-avatar" src={keinoUrl}/>
+                    <h3 className="top-name"> {user ? `Welcome, ${user.first_name}` : ""}</h3>
+            </div>
+: <></>
+}
       </nav>
 
       </div>
