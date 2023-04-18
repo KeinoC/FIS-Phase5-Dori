@@ -1,56 +1,42 @@
 import React, { useState, useContext } from "react";
-import {UserContext} from "../context.js";
-import "./NewLeaseForm.css"
-
-
+import { UserContext } from "../context.js";
+import "./NewLeaseForm.css";
 
 function NewLeaseForm() {
-    const user = useContext(UserContext)
-    function Input({ label, id, name, type, value, onChange }) {
-        return (
-            <div>
-                <label htmlFor={id}>{label}</label>
-                <input
-                    type={type}
-                    id={id}
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                />
-            </div>
-        );
-    }
+    const { user, selectedLeaseApp, newLeaseFormData, setNewLeaseFormData } =
+        useContext(UserContext);
 
-    const [leaseData, setLeaseData] = useState({
-        lessor_id: "",
-        lessee_id: "",
-        unit_id: "",
-        rent: "",
-        sec_deposit: "",
-        beds: "",
-        baths: "",
-        sqft: "",
-        type: "",
-        util_incld: "",
-        util_excld: "",
-        lot: "",
-        street: "",
-        unit_num: "",
-        city: "",
-        state: "",
-        zip: "",
-    });
+    console.log(selectedLeaseApp);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setLeaseData({
-            ...leaseData,
+        setNewLeaseFormData({
+            ...newLeaseFormData,
             [name]: value,
         });
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const leaseData = {
+            lessor_id: newLeaseFormData && newLeaseFormData.unit.lessor_id || "",
+            lessee_id: newLeaseFormData && newLeaseFormData.lessee_id || "",
+            unit_id: newLeaseFormData && newLeaseFormData.unit_id || "",
+            rent: newLeaseFormData && newLeaseFormData.rent || "",
+            sec_deposit: newLeaseFormData && newLeaseFormData.sec_deposit || "",
+            beds: newLeaseFormData && newLeaseFormData.beds || "",
+            baths: newLeaseFormData && newLeaseFormData.baths || "",
+            sqft: newLeaseFormData && newLeaseFormData.sqft || "",
+            type: newLeaseFormData && newLeaseFormData.type || "",
+            util_incld: newLeaseFormData && newLeaseFormData.util_incld || "",
+            util_excld: newLeaseFormData && newLeaseFormData.util_excld || "",
+            lot: newLeaseFormData && newLeaseFormData.lot || "",
+            street: newLeaseFormData && newLeaseFormData.street || "",
+            unit_num: newLeaseFormData && newLeaseFormData.unit_num || "",
+            city: newLeaseFormData && newLeaseFormData.city || "",
+            state: newLeaseFormData && newLeaseFormData.state || "",
+            zip: newLeaseFormData && newLeaseFormData.zip || "",
+        };
         fetch("/leases", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -65,30 +51,18 @@ function NewLeaseForm() {
             .then((data) => {
                 console.log(data);
                 // reset form data
-                setLeaseData({
-                    lessor_id: "",
-                    lessee_id: "",
-                    unit_id: "",
-                    rent: "",
-                    sec_deposit: "",
-                    beds: "",
-                    baths: "",
-                    sqft: "",
-                    type: "",
-                    util_incld: "",
-                    util_excld: "",
-                    lot: "",
-                    street: "",
-                    unit_num: "",
-                    city: "",
-                    state: "",
-                    zip: "",
-                });
+                setNewLeaseFormData(
+                    Object.fromEntries(
+                        Object.keys(newLeaseFormData).map((key) => [key, ""])
+                    )
+                );
             })
             .catch((error) => {
                 console.error(error);
             });
     };
+
+    console.log(newLeaseFormData)
 
     return (
         <div className="form-container">
@@ -99,7 +73,8 @@ function NewLeaseForm() {
                     id="lessor_id"
                     name="lessor_id"
                     type="text"
-                    value={leaseData.lessor_id}
+                    // placeholder={newLeaseFormData ? newLeaseFormData.unit.lessor_id : ""}
+                    value={newLeaseFormData.lessor_id}
                     onChange={handleInputChange}
                 />
                 <label>Lessee ID:</label>
@@ -108,7 +83,7 @@ function NewLeaseForm() {
                     id="lessee_id"
                     name="lessee_id"
                     type="text"
-                    value={leaseData.lessee_id}
+                    value={newLeaseFormData.lessee_id}
                     onChange={handleInputChange}
                 />
                 <label>Unit ID</label>
@@ -117,7 +92,7 @@ function NewLeaseForm() {
                     id="unit_id"
                     name="unit_id"
                     type="text"
-                    value={leaseData.unit_id}
+                    value={newLeaseFormData.unit_id}
                     onChange={handleInputChange}
                 />
                 <label>Monthly Rent</label>
@@ -126,7 +101,7 @@ function NewLeaseForm() {
                     id="rent"
                     name="rent"
                     type="text"
-                    value={leaseData.rent}
+                    value={newLeaseFormData.rent}
                     onChange={handleInputChange}
                 />
                 <label>Security Deposit</label>
@@ -135,7 +110,7 @@ function NewLeaseForm() {
                     id="sec_deposit"
                     name="sec_deposit"
                     type="text"
-                    value={leaseData.sec_deposit}
+                    value={newLeaseFormData.sec_deposit}
                     onChange={handleInputChange}
                 />
                 <label>Bedrooms</label>
@@ -144,7 +119,7 @@ function NewLeaseForm() {
                     id="beds"
                     name="beds"
                     type="text"
-                    value={leaseData.beds}
+                    value={newLeaseFormData.beds}
                     onChange={handleInputChange}
                 />
                 <label>Bathrooms</label>
@@ -153,7 +128,7 @@ function NewLeaseForm() {
                     id="baths"
                     name="baths"
                     type="text"
-                    value={leaseData.baths}
+                    value={newLeaseFormData.baths}
                     onChange={handleInputChange}
                 />
                 <label>Square Footage</label>
@@ -162,7 +137,7 @@ function NewLeaseForm() {
                     id="sqft"
                     name="sqft"
                     type="text"
-                    value={leaseData.sqft}
+                    value={newLeaseFormData.sqft}
                     onChange={handleInputChange}
                 />
                 <label>Type</label>
@@ -171,7 +146,7 @@ function NewLeaseForm() {
                     id="type"
                     name="type"
                     type="text"
-                    value={leaseData.type}
+                    value={newLeaseFormData.type}
                     onChange={handleInputChange}
                 />
                 <label>Utilities Included</label>
@@ -180,15 +155,15 @@ function NewLeaseForm() {
                     id="util_incld"
                     name="util_incld"
                     type="text"
-                    value={leaseData.util_incld}
+                    value={newLeaseFormData.util_incld}
                     onChange={handleInputChange}
                 />
-                    <label>Utilities Excluded</label>
+                <label>Utilities Excluded</label>
                 <input
                     id="util_excld"
                     name="util_excld"
                     type="text"
-                    value={leaseData.util_excld}
+                    value={newLeaseFormData.util_excld}
                     onChange={handleInputChange}
                 />
                 <label>House #</label>
@@ -197,7 +172,7 @@ function NewLeaseForm() {
                     id="lot"
                     name="lot"
                     type="text"
-                    value={leaseData.lot}
+                    value={newLeaseFormData.lot}
                     onChange={handleInputChange}
                 />
                 <label>Street</label>
@@ -206,7 +181,7 @@ function NewLeaseForm() {
                     id="street"
                     name="street"
                     type="text"
-                    value={leaseData.street}
+                    value={newLeaseFormData.street}
                     onChange={handleInputChange}
                 />
                 <label>Unit #</label>
@@ -215,7 +190,7 @@ function NewLeaseForm() {
                     id="unit_num"
                     name="unit_num"
                     type="text"
-                    value={leaseData.unit_num}
+                    value={newLeaseFormData.unit_num}
                     onChange={handleInputChange}
                 />
                 <label>City</label>
@@ -224,7 +199,7 @@ function NewLeaseForm() {
                     id="city"
                     name="city"
                     type="text"
-                    value={leaseData.city}
+                    value={newLeaseFormData.city}
                     onChange={handleInputChange}
                 />
                 <label>State</label>
@@ -233,7 +208,7 @@ function NewLeaseForm() {
                     id="state"
                     name="state"
                     type="text"
-                    value={leaseData.state}
+                    value={newLeaseFormData.state}
                     onChange={handleInputChange}
                 />
                 <label>Zip</label>
@@ -242,7 +217,7 @@ function NewLeaseForm() {
                     id="zip"
                     name="zip"
                     type="text"
-                    value={leaseData.zip}
+                    value={newLeaseFormData.zip}
                     onChange={handleInputChange}
                 />
                 {/* <button type="submit">Create Lease</button> */}

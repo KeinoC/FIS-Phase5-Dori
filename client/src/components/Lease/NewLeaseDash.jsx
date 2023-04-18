@@ -125,7 +125,7 @@ function NewLeaseDash() {
                         <h1 className="new-lease-header"> New Lease </h1>
                     </div>
                     <div className="new-lease-card-container">
-                        {/* <div className= {(leaseUnitView && unitRight) ? "new-lease-card lcard1 lease-current-section-from-right" : leaseUnitView ? "new-lease-card lcard1 lease-current-section-from-left" : unitRight ? "new-lease-card lcard1-right" : "new-lease-card lcard1"}>
+                        <div className= {(leaseUnitView && unitRight) ? "new-lease-card lcard1 lease-current-section-from-right" : leaseUnitView ? "new-lease-card lcard1 lease-current-section-from-left" : unitRight ? "new-lease-card lcard1-right" : "new-lease-card lcard1"}>
                             <div className="lease-card-face">
                                 <section className="lease-card-head2"><span className="span-rotate">Apartment</span></section>
                                 <section className="lease-display-area"><UserUnitsLease /></section>
@@ -133,7 +133,7 @@ function NewLeaseDash() {
                             <div className="button-div">
                                 <button className="next-button" onClick = {()=>unitNext()}>Next</button>
                             </div>
-                        </div> */}
+                        </div>
                         <div className= {(leaseAppView && appRight) ? "new-lease-card lcard2 lease-current-section-from-right" : leaseAppView ? "new-lease-card lcard2 lease-current-section-from-left" : appRight ? "new-lease-card lcard2-right" : "new-lease-card lcard2"}>
                             <div className="lease-card-face">
                                 <section className="lease-card-head2"><span className="span-rotate">Tenant</span></section>

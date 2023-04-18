@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context.js";
+import { useHistory } from "react-router-dom";
 // import '../../styles/tailwind.css'
 import "./UnitMapCards.css";
+
 
 function UnitMapCards() {
     const {
@@ -10,8 +12,14 @@ function UnitMapCards() {
         searchState,
         filteredUnits,
         setFilteredUnits,
+        llPhoneFromMapView,
+        llPhoneById,
+        setCurrentAppUnit,
     } = useContext(UserContext);
+    
+    const history = useHistory();
 
+    
     const filteredUnitCards = filteredUnits.map((unit) => {
         const {
             id,
@@ -26,6 +34,12 @@ function UnitMapCards() {
             beds,
             sqft,
         } = unit;
+        
+        function continueToApplication() {
+            setCurrentAppUnit(unit);
+            history.push("/unit_application");
+        }
+
 
         return (
             <div className=".sm: unit-card-div" key={id}>
@@ -58,8 +72,12 @@ function UnitMapCards() {
                         <p>
                             <span className="b">Sqft:</span> <span>{sqft}</span>
                         </p>
-                    </div>
-                    
+
+                </div>
+                    <button className="phone-ph" onClick={()=>llPhoneById(unit.lessor_id)}>Call: {llPhoneFromMapView}</button>
+                    <button className="email-ph">Email</button>
+                    <button className="inmail-ph">In-Mail</button>
+                    <button className="apply-ph" type="button" onClick={continueToApplication}>Apply Now</button>
                 </div>
             </div>
         );
