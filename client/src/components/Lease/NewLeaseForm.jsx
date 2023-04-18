@@ -19,23 +19,23 @@ function NewLeaseForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const leaseData = {
-            lessor_id: newLeaseFormData && newLeaseFormData.unit.lessor_id || "",
-            lessee_id: newLeaseFormData && newLeaseFormData.lessee_id || "",
-            unit_id: newLeaseFormData && newLeaseFormData.unit_id || "",
-            rent: newLeaseFormData && newLeaseFormData.rent || "",
-            sec_deposit: newLeaseFormData && newLeaseFormData.sec_deposit || "",
-            beds: newLeaseFormData && newLeaseFormData.beds || "",
-            baths: newLeaseFormData && newLeaseFormData.baths || "",
-            sqft: newLeaseFormData && newLeaseFormData.sqft || "",
-            type: newLeaseFormData && newLeaseFormData.type || "",
-            util_incld: newLeaseFormData && newLeaseFormData.util_incld || "",
-            util_excld: newLeaseFormData && newLeaseFormData.util_excld || "",
-            lot: newLeaseFormData && newLeaseFormData.lot || "",
-            street: newLeaseFormData && newLeaseFormData.street || "",
-            unit_num: newLeaseFormData && newLeaseFormData.unit_num || "",
-            city: newLeaseFormData && newLeaseFormData.city || "",
-            state: newLeaseFormData && newLeaseFormData.state || "",
-            zip: newLeaseFormData && newLeaseFormData.zip || "",
+            lessor_id: newLeaseFormData?.unit?.lessor_id || "",
+            lessee_id: newLeaseFormData?.lessee_id || "",
+            unit_id: newLeaseFormData?.unit_id || "",
+            rent: newLeaseFormData?.rent || "",
+            sec_deposit: newLeaseFormData?.sec_deposit || "",
+            beds: newLeaseFormData?.beds || "",
+            baths: newLeaseFormData?.baths || "",
+            sqft: newLeaseFormData?.sqft || "",
+            type: newLeaseFormData?.type || "",
+            util_incld: newLeaseFormData?.util_incld || "",
+            util_excld: newLeaseFormData?.util_excld || "",
+            lot: newLeaseFormData?.lot || "",
+            street: newLeaseFormData?.street || "",
+            unit_num: newLeaseFormData?.unit_num || "",
+            city: newLeaseFormData?.city || "",
+            state: newLeaseFormData?.state || "",
+            zip: newLeaseFormData?.zip || "",
         };
         fetch("/leases", {
             method: "POST",
@@ -220,7 +220,7 @@ function NewLeaseForm() {
                     value={newLeaseFormData.zip}
                     onChange={handleInputChange}
                 />
-                {/* <button type="submit">Create Lease</button> */}
+                <button type="submit">Create Lease</button>
             </form>
         </div>
     );

@@ -222,7 +222,7 @@ class Lease (db.Model, SerializerMixin):
     baths = db.Column(db.Integer, nullable=True)
     sqft = db.Column(db.Integer, nullable=True)
     type = db.Column(db.String, nullable=True)
-    util_incld = db.Column(db.Boolean, nullable=True)
+    util_incld = db.Column(db.String, nullable=True)
     util_excld = db.Column(db.String, nullable=True)
     lot = db.Column(db.String, nullable=True)
     street = db.Column(db.String, nullable=True)

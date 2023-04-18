@@ -4,6 +4,7 @@ import NewLeaseForm from "./NewLeaseForm.jsx";
 import "./NewLeaseDash.css";
 import UserUnitsLease from "../Unit/UserUnitsLease.jsx";
 import UserApplicationDash from "./UserApplicationDash.jsx";
+import LeasePreview from "./LeasePreview.jsx";
 
 function NewLeaseDash() {
     ///views through the lease experience
@@ -156,8 +157,8 @@ function NewLeaseDash() {
                         </div>
                         <div className={(leaseReviewView && reviewRight) ? "new-lease-card lcard4 lease-current-section-from-right" : leaseReviewView ? "new-lease-card lcard4 lease-current-section-from-left" : reviewRight ? "new-lease-card lcard4-right" : "new-lease-card lcard4"}>
                             <div className="lease-card-face">
-                                <section className="lease-card-head2"><span className="span-rotate">Review</span></section>
-                                <section className="lease-display-area"></section>
+                                <section className="lease-card-head2"><span className="span-rotate">Peview</span></section>
+                                <section className="lease-display-area"><LeasePreview /></section>
                             </div>
                             <div className="button-div">
                                 <button className="next-button" onClick={()=>reviewPrev()}>Previous</button>
