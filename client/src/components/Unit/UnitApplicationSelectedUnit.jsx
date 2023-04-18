@@ -36,7 +36,7 @@ function UnitApplicationSelectedUnit() {
                 {/* <img src={unit.img_url} alt="unit" /> */}
                 <img
                     className="a-unit-card-image"
-                    src="https://tinyurl.com/TestImg-brownstone"
+                    src={currentAppUnit.image_url}
                 />
             </div>
             <div className="a-unit-card-info">

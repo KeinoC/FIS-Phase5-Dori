@@ -1,7 +1,12 @@
 import React, { useState, useContext } from "react";
+import { useHistory, Link } from "react-router-dom";
 import { UserContext } from "../context.js";
 // import '../../styles/tailwind.css'
 import "./UnitMapCards.css";
+
+
+
+
 
 function UnitAllCards() {
     const {
@@ -12,8 +17,11 @@ function UnitAllCards() {
         llPhoneById,
         llPhoneFromMapView,
         setLlPhoneFromMapView,
+        setCurrentAppUnit,
     } = useContext(UserContext);
-
+    
+    const history = useHistory();
+    
     const allUnitCards = allUnits.map((unit) => {
         const {
             id,
@@ -31,6 +39,10 @@ function UnitAllCards() {
         } = unit;
 
 
+        function continueToApplication() {
+            setCurrentAppUnit(unit);
+            history.push("/unit_application");
+        }
 
 
 
@@ -68,6 +80,7 @@ function UnitAllCards() {
                     <button className="phone-ph" onClick={()=>llPhoneById(unit.lessor_id)}>Call: {llPhoneFromMapView}</button>
                     <button className="email-ph">Email</button>
                     <button className="inmail-ph">In-Mail</button>
+                    <button className="apply-ph" type="button" onClick={continueToApplication}>Apply Now</button>
                 </div>
             </div>
         );

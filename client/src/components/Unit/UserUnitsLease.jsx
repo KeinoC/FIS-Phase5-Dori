@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context.js";
-import "./UserUnitsDash.css";
+import "./UserUnitsLease.css";
 // import 'semantic-ui-css/semantic.min.css'
 // import { Accordion, Icon } from 'semantic-ui-react'
+import { Card, Icon, Image } from 'semantic-ui-react'
 
-function UserUnitsDash() {
+function UserUnitsLease() {
 
 
     const {
@@ -35,6 +36,7 @@ function UserUnitsDash() {
                     if (!response.ok) {
                         throw new Error("Failed to delete unit");
                     }
+                    setAllUnits(allUnits.filter((u) => u.id !== unit.id));
                 })
                 .catch((error) => {
                     console.error(error);
@@ -64,13 +66,13 @@ function UserUnitsDash() {
         return (
 
             <div
-                className="d-unit-card-div"
+                className="l-unit-card-div"
                 key={id}
                 onClick={() => setCurrentAppUnit(unit)}
             >
-                <div className="d-unit-card-slides">
+                <div className="l-unit-card-slides">
                     {/* <img src={unit.img_url} alt="unit" /> */}
-                    <img className="d-unit-card-image" src={image_url} />
+                    <img className="l-unit-card-image" src={image_url} />
                 </div>
 
                 {lessor_id === user.id ? (
@@ -83,7 +85,7 @@ function UserUnitsDash() {
                         <button onClick={()=>handleDelete(unit)}>Delete</button>
                 ) : null}
 
-                <div className="d-unit-card-info">
+                <div className="l-unit-card-info">
                     <h4>{name}</h4>
                     <p>rent: {price}</p>
                     <p>{type}</p>
@@ -96,7 +98,7 @@ function UserUnitsDash() {
                     </p>
                     <li>Unit Number:{unit_num}</li>
 
-                    <div className="d-bed-bath-tag">
+                    <div className="l-bed-bath-tag">
                         <p>
                             <span className="b">Beds:</span>{" "}
                             <span>{beds} </span>
@@ -112,7 +114,7 @@ function UserUnitsDash() {
             </div>
         );
     });
-    return <div className="d-scroll-div">{filteredUnitCards}</div>;
+    return <div className="l-scroll-div">{filteredUnitCards}</div>;
 }
 
-export default UserUnitsDash;
+export default UserUnitsLease;

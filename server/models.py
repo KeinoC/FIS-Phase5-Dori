@@ -28,7 +28,7 @@ class User(db.Model, SerializerMixin):
     city = db.Column(db.String, nullable=False)
     state = db.Column(db.String, nullable=False)
     zip = db.Column(db.String, nullable=False)
-    photo_id = db.Column(db.String, unique=True, nullable=False)
+    photo_id = db.Column(db.String)
     image_url = db.Column(db.String)
     bio = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -194,10 +194,15 @@ class UnitApplication (db.Model, SerializerMixin):
             unit_data = self.unit.serialize()
         else:
             unit_data = {'error': 'Unit not found'}
+        if self.lessee is not None:
+            lessee_data = self.lessee.serialize()
+        else:
+            lessee_data = {'error': 'Lessee not found'}
 
         data = {
             'id': self.id,
             'lessee_id': self.lessee_id,
+            'lessee' : lessee_data,
             'unit_id': self.unit_id,
             'unit': unit_data,
             'status': self.status,
@@ -219,13 +224,16 @@ class Lease (db.Model, SerializerMixin):
     lessor_id = db.Column(db.Integer(), db.ForeignKey('lessors.id'))
     lessee_id = db.Column(db.Integer(), db.ForeignKey('lessees.id'))
     unit_id = db.Column(db.Integer(), db.ForeignKey('units.id'))
+    signed_date = db.Column(db.DateTime, nullable=True)
+    start_date = db.Column(db.DateTime, nullable=True)
+    end_date = db.Column(db.DateTime, nullable=True)
     rent = db.Column(db.Integer, nullable=True)
     sec_deposit = db.Column(db.Integer, nullable=True)
     beds = db.Column(db.Integer, nullable=True)
     baths = db.Column(db.Integer, nullable=True)
     sqft = db.Column(db.Integer, nullable=True)
     type = db.Column(db.String, nullable=True)
-    util_incld = db.Column(db.Boolean, nullable=True)
+    util_incld = db.Column(db.String, nullable=True)
     util_excld = db.Column(db.String, nullable=True)
     lot = db.Column(db.String, nullable=True)
     street = db.Column(db.String, nullable=True)

@@ -1,18 +1,22 @@
 import React, { useEffect, useState, createContext } from "react";
+import { useHistory } from "react-router-dom";
+import Geocode from 'react-geocode';
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
+    
+    const history = useHistory();
+
     const [user, setUser] = useState(null);
     const [allUnits, setAllUnits] = useState([]);
-    
 
     const [allApplications, setAllApplications] = useState(null);
     const [userApplications, setUserApplications] = useState(null);
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [myId, setMyId] = useState("");
 
-    const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("")
+    const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("");
 
 
     const [userUnits, setUserUnits] = useState([]);
@@ -30,7 +34,7 @@ const UserProvider = ({ children }) => {
     );
 
     const [newUnitFormData, setNewUnitFormData] = useState({
-        lessor_id: myId ? myId : "",
+        lessor_id: "",
         // lessor: user,
 
         name: "",
@@ -48,8 +52,61 @@ const UserProvider = ({ children }) => {
         price: "",
     });
 
-    /////////////////////// new unit ///////////////////////// 
 
+
+    ///////////////////////// lease prefill ////////////////////////
+    const [selectedLeaseApp, setSelectedLeaseApp] = useState(null)
+    const [newLeaseFormData, setNewLeaseFormData] = useState({
+        lessor_id: selectedLeaseApp ? selectedLeaseApp.unit.lessor_id : "",
+        lessee_id: selectedLeaseApp ? selectedLeaseApp.lessee_id : "",
+        unit_id: selectedLeaseApp ? selectedLeaseApp.unit_id : "",
+        rent: selectedApplication ? selectedApplication.rent : "",
+        start_date: selectedApplication ? selectedApplication.start_date : "",
+        end_date: selectedApplication ? selectedApplication.end_date : "",
+        rent : selectedApplication ? selectedApplication.unit.rent : "",
+        sec_deposit : selectedApplication ? selectedApplication.sec_deposit : "",
+        beds : selectedApplication ? selectedApplication.unit.beds : "",
+        baths : selectedApplication ? selectedApplication.unit.baths : "",
+        sqft : selectedApplication ? selectedApplication.unit.sqft : "",
+        type : selectedApplication ? selectedApplication.unit.type : "",
+        util_incld : selectedApplication ? selectedApplication.unit.util_incld : "",
+        util_excluded : selectedApplication ? selectedApplication.unit.util_excluded : "",
+        lot : selectedApplication ? selectedApplication.unit.lot : "",
+        street : selectedApplication ? selectedApplication.unit.street : "",
+        unit_num : selectedApplication ? selectedApplication.unit.unit_num : "",
+        city : selectedApplication ? selectedApplication.unit.city : "",
+        state : selectedApplication ? selectedApplication.unit.state : "",
+        zip : selectedApplication ? selectedApplication.unit.zip : "",
+    })
+
+    useEffect(() => {
+        if (selectedLeaseApp) {
+          setNewLeaseFormData({
+            lessor_id: selectedLeaseApp.unit ? selectedLeaseApp.unit.lessor_id : "",
+            lessee_id: selectedLeaseApp.lessee_id || "",
+            unit_id: selectedLeaseApp.unit_id || "",
+            rent: selectedLeaseApp.rent || "",
+            start_date: selectedLeaseApp.start_date || "",
+            end_date: selectedLeaseApp.end_date || "",
+            rent: selectedLeaseApp.unit ? selectedLeaseApp.unit.rent : "",
+            sec_deposit: selectedLeaseApp.sec_deposit || "",
+            beds: selectedLeaseApp.unit ? selectedLeaseApp.unit.beds : "",
+            baths: selectedLeaseApp.unit ? selectedLeaseApp.unit.baths : "",
+            sqft: selectedLeaseApp.unit ? selectedLeaseApp.unit.sqft : "",
+            type: selectedLeaseApp.unit ? selectedLeaseApp.unit.type : "",
+            util_incld: selectedLeaseApp.unit ? selectedLeaseApp.unit.util_incld : "",
+            util_excluded: selectedLeaseApp.unit ? selectedLeaseApp.unit.util_excluded : "",
+            lot: selectedLeaseApp.unit ? selectedLeaseApp.unit.lot : "",
+            street: selectedLeaseApp.unit ? selectedLeaseApp.unit.street : "",
+            unit_num: selectedLeaseApp.unit ? selectedLeaseApp.unit.unit_num : "",
+            city: selectedLeaseApp.unit ? selectedLeaseApp.unit.city : "",
+            state: selectedLeaseApp.unit ? selectedLeaseApp.unit.state : "",
+            zip: selectedLeaseApp.unit ? selectedLeaseApp.unit.zip : "",
+          });
+        }
+      }, [selectedLeaseApp]);
+
+    /////////////////////// new unit /////////////////////////
 
     const handleNewUnitSubmit = (event) => {
         event.preventDefault();
@@ -85,8 +142,6 @@ const UserProvider = ({ children }) => {
                 console.error("Error:", error);
             });
     };
-
-
 
     ///////////////////////  UNIT EDIT  /////////////////////////
     const [unitToEdit, setUnitToEdit] = useState(null);
@@ -168,8 +223,6 @@ const UserProvider = ({ children }) => {
         });
     }, []);
 
-
-
     ///////////////////// UNITS BY ID //////////////////////////
 
     useEffect(() => {
@@ -218,24 +271,13 @@ const UserProvider = ({ children }) => {
         }
     }, [user]);
 
-
     /////////////////////// New Unit Post request
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        const updated = { ...newUnitFormData, [name]: value }
-        setNewUnitFormData(updated)
+        const updated = { ...newUnitFormData, [name]: value };
+        setNewUnitFormData(updated);
     };
-
-
-
-
-
-
-
-
-
-
 
     ////////////////////////////////////////////////////////////
     ///////////////////// Applications /////////////////////////
@@ -261,6 +303,7 @@ const UserProvider = ({ children }) => {
                 .then((response) => response.json())
                 .then((newUnitApplication) => {
                     console.log("Success:", newUnitApplication);
+                    history.push("/dashboard");
                 })
                 .catch((error) => {
                     console.error("Error:", error);
@@ -284,17 +327,18 @@ const UserProvider = ({ children }) => {
             .then((applications) => {
                 setAllApplications(applications);
             });
-    }, [user]);
+    }, []);
 
     //// Current User's Applications
     useEffect(() => {
         if (user && allApplications) {
             const uApps = allApplications.filter(
-                (app) => app.lessee_id === user.id || app.lessor_id === user.id
+                (app) => app.lessee_id === user.id || app.lessor_id === app.unit.lessor_id
             );
             setUserApplications(uApps);
         }
     }, [user, allApplications]);
+
 
     // userApplications.map((app) => {
     //   const userAppList = []
@@ -327,24 +371,32 @@ const UserProvider = ({ children }) => {
 
     }, [allUnits, user]);
 
+    /////////////////////////////////////////////////////////
+    /////////////// Map View Helpers //////////////////////
 
-/////////////// Map View Helpers //////////////////////
+    function llPhoneById(id) {
+        fetch("/users/" + id)
+            .then((r) => r.json())
+            .then((user) => {
+                setLlPhoneFromMapView(user.phone);
+            });
+    }
 
-function llPhoneById(id) {
-    fetch("/users/" + id)
-        .then((r) => r.json())
-        .then((user) => {
-            setLlPhoneFromMapView(user.phone)
-        });
-}
+    ////// address to lat/long for map view
 
+    const getCoordinates = async (address) => {
+        try {
+            const response = await Geocode.fromAddress(address);
+            const { lat, lng } = response.results[0].geometry.location;
+            return { lat, lng };
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    };
 
-
-
-
-
-
-
+    const testAddy = "1738 brooklyn Avenue brooklyn, ny 11210"
+    console.log(getCoordinates(testAddy))
 
 
     //////handle Property search //////////////////
@@ -369,11 +421,14 @@ function llPhoneById(id) {
     //     }
     // }, [allUnits]);
 
-    console.log(filteredUnits)
-    console.log(allUnits)
 
     useEffect(() => {
-        if (allUnits & (searchState.length === 0 || searchState === "" || searchState === null)) {
+        if (
+            allUnits &
+            (searchState.length === 0 ||
+                searchState === "" ||
+                searchState === null)
+        ) {
             setFilteredUnits(allUnits);
         } else {
             const fUnits = allUnits.filter((unit) => {
@@ -488,8 +543,11 @@ function llPhoneById(id) {
                 setMyId,
                 handleInputChange,
                 llPhoneById,
-                
-        
+                selectedLeaseApp,
+                newLeaseFormData,
+                setNewLeaseFormData,
+                setSelectedLeaseApp,
+
 
             }}
         >
