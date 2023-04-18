@@ -1,12 +1,14 @@
 
 import React, {useState, useContext, useEffect} from "react";
 import Sidebar from "../Global/Sidebar.jsx";
+import RentChart from "./RentChart.jsx";
 import "./Dashboard.css"
 // import UnitCards from "../../Unit/UnitMapCards.jsx"
 import { UserContext } from "../../context.js";
 
 import UserUnitsDash from "../../Unit/UserUnitsDash.jsx";
 import UserApplicationDash from "../../Lease/UserApplicationDash.jsx";
+
 
 function Dashboard() {
     const { user, userApplications, userUnits, userUnitCount, userApplicationCount } =
@@ -38,6 +40,7 @@ const [showApplications, setShowApplications] = useState(false)
             <Sidebar />
 
         <div className="dashboard-container">
+            <RentChart />
             <div className="dash-tag" onClick={toggleShowUnits}>Units</div>
             {showUnits ? <UserUnitsDash /> : <></>}
             
