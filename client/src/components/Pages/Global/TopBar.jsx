@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "../../../styles";
 // import Login from "../../../pages/Login";
 import {useHistory} from "react-router-dom";
 import  {UserContext}  from "../../context.js";
@@ -57,8 +56,11 @@ const keinoUrl = "https://media.licdn.com/dms/image/D4E03AQFfeQmJjk6LIQ/profile-
           Login
         </button>
         </a>
+
         :
         <Link to="/landing">
+:
+        <Link to="/login">
         <button variant="outline" onClick={handleLogoutClick}>
           Logout
         </button>
@@ -70,6 +72,7 @@ const keinoUrl = "https://media.licdn.com/dms/image/D4E03AQFfeQmJjk6LIQ/profile-
                     <h3 className="top-name"> {user ? `Welcome, ${user.first_name}` : ""}</h3>
             </div>
 : <></>
+
 }
       </nav>
 

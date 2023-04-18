@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 function NewUnitForm() {
     const { user, myId, setMyId, handleInputChange, handleNewUnitSubmit, newUnitFormData, setNewUnitFormData } = useContext(UserContext)
 
+
     const history = useHistory();
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,6 +16,7 @@ function NewUnitForm() {
 
 
     const renderInput = (inputName,) => {
+
         return (
             <label>
                 {inputName}:
@@ -27,6 +29,7 @@ function NewUnitForm() {
             </label>
         );
     };
+
 
     return (
         <>
@@ -49,7 +52,10 @@ function NewUnitForm() {
                     <button type="button">Cancel</button>
                 </Link>
 
+
                     <button type="submit">Submit</button>
+
+
             </form>
         </>
     );
