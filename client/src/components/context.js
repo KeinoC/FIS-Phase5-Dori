@@ -18,13 +18,16 @@ const UserProvider = ({ children }) => {
 
     const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("");
 
+
     const [userUnits, setUserUnits] = useState([]);
+    const [userUnitCount, setUserUnitCount] = useState(0);
+    const [currentAppUnitId, setCurrentAppUnitId] = useState(null);
+    const [currentAppUnit, setCurrentAppUnit] = useState(null);
+
     const [pSearchResults, setPSearchResults] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [searchState, setSearchState] = useState("All");
     const [filteredUnits, setFilteredUnits] = useState([]);
-    const [currentAppUnit, setCurrentAppUnit] = useState(null);
-    const [currentAppUnitId, setCurrentAppUnitId] = useState(null);
     const [currentUserId, setCurrentUserId] = useState(null);
     const [currentAppLessorId, setCurrentAppLessorId] = useState(
         currentAppUnit ? currentAppUnit.lessor_id : ""
@@ -33,6 +36,7 @@ const UserProvider = ({ children }) => {
     const [newUnitFormData, setNewUnitFormData] = useState({
         lessor_id: "",
         // lessor: user,
+
         name: "",
         image_url: "",
         type: "",
@@ -157,6 +161,7 @@ const UserProvider = ({ children }) => {
         price: "",
     });
 
+
     useEffect(() => {
         if (unitToEdit) {
             setUnitEditPrefill({
@@ -231,6 +236,7 @@ const UserProvider = ({ children }) => {
     }, [currentAppLessorId]);
 
     useEffect(() => {
+
         if (user) {
             setCurrentAppUnit((prevState) => ({
                 ...prevState,
@@ -239,11 +245,19 @@ const UserProvider = ({ children }) => {
         }
     }, [user]);
 
+
     useEffect(() => {
         // fetch allUnits
         fetch("/units").then((r) => {
             if (r.ok) {
-                r.json().then((units) => setAllUnits(units));
+                r.json().then((units) => {
+                    setAllUnits(units);
+                    if (user && allUnits) {
+                        const uUnits = units.filter(unit => unit.lessor_id === user.id);
+                        setUserUnits(uUnits);
+                        setUserUnitCount(uUnits.length);
+                    }
+                });
             }
         });
     }, []);
@@ -341,7 +355,20 @@ const UserProvider = ({ children }) => {
                 (unit) => unit.lessor_id === user.id
             );
             setUserUnits(uUnits);
+            setUserUnitCount(uUnits.length);
         }
+    }, [user, allUnits]);
+
+    ///// User Counts!!
+
+    useEffect(() => {
+        if (userUnits) {
+            console.log(userUnits);
+            const uLength = userUnits.length;
+            console.log(uLength);
+            setUserUnitCount(uLength);
+        }
+
     }, [allUnits, user]);
 
     /////////////////////////////////////////////////////////
@@ -370,6 +397,7 @@ const UserProvider = ({ children }) => {
 
     const testAddy = "1738 brooklyn Avenue brooklyn, ny 11210"
     console.log(getCoordinates(testAddy))
+
 
     //////handle Property search //////////////////
 
@@ -519,6 +547,7 @@ const UserProvider = ({ children }) => {
                 newLeaseFormData,
                 setNewLeaseFormData,
                 setSelectedLeaseApp,
+
 
             }}
         >
