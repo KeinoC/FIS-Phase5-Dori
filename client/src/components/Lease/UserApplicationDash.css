@@ -1,31 +1,45 @@
-button {
-    background-color:teal;
-    color: whitesmoke;
+.button {
+    background-color: var(--accent);
+    color: var(--darkText);
     border: none;
     border-radius: 0.25rem;
     padding: .5rem;
     cursor: pointer;
     margin-left: 1vw;
     margin-right: 1vw;
+    bottom:0;
 }
 
-button:hover {
+.app-scroll-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    width: 80vw;
+    background-color: rgb(240, 255, 255);
+    overflow: hidden;
+}
+
+.button:hover {
     background-color: rgb(2, 201, 201);
+    cursor: pointer;
 }
 
 .user-application-card {
     display: flex;
     flex-direction: row;
-    width: 90%;
+    width: 100%;
     max-height: 20vh;
-    margin: 1%;
+    margin: .5vh;
     border-radius: 5px;
-    overflow: hidden;
-    background-color:rgb(2, 201, 201)
+    overflow-y: scroll;
+    background-color:whitesmoke;
 }
 
 .user-application-card-info-container {
     flex-direction: column;
+    height: 6vh;
 }
 
 .user-application-card-info {

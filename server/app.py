@@ -251,7 +251,7 @@ def create_lease():
     lease = Lease(**data)
     db.session.add(lease)
     db.session.commit()
-    return jsonify(lease.serialize()), 201
+    return jsonify(lease.to_dict()), 201
 
 # Get all leases
 @app.route('/leases', methods=['GET'])

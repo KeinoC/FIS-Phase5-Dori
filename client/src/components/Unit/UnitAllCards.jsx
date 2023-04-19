@@ -18,6 +18,7 @@ function UnitAllCards() {
         llPhoneFromMapView,
         setLlPhoneFromMapView,
         setCurrentAppUnit,
+        setUnitOptionsApplication,
     } = useContext(UserContext);
     
     const history = useHistory();
@@ -41,6 +42,7 @@ function UnitAllCards() {
 
         function continueToApplication() {
             setCurrentAppUnit(unit);
+            setUnitOptionsApplication(false)
             history.push("/unit_application");
         }
 

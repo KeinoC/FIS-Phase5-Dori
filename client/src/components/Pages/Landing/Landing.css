@@ -36,7 +36,7 @@
 } */
 
 .homepage {
-    background-color: teal;
+    background-color: var(--accent);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,11 +54,11 @@
     box-shadow: inset;
     /* margin-top:10dvh; */
     min-width: 90vw;
-    height: 16vw;
+    height: 20vw;
     padding: 0;
     display: inline-block;
     font-family: "Montserrat", sans-serif;
-    font-size: 16dvw;
+    font-size: 15dvw;
     letter-spacing: 3dvw;
     position: relative;
     align-content: center;
@@ -67,12 +67,12 @@
     background: url("https://i.pinimg.com/originals/9f/9c/c5/9f9cc5217bb04790e5fb852b665ca2ff.jpg");
     background: url("https://wallpaper.dog/large/20524731.jpg");
     background: url("https://external-preview.redd.it/XY1qHDEIa84ZqvMPdwGBFoKrpfiNNr60uvEKJ65wdyI.png?auto=webp&v=enabled&s=d5cd1ff647cbdb5c612a359cccfea690c3f6a842");
-    background-size: auto 200%;
+    background-size: auto 400%;
     background-clip: text;
     text-fill-color: transparent;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shine 80s linear infinite;
+    animation: shine 70s linear infinite;
 }
 
 @keyframes shine {

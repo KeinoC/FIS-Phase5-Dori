@@ -27,8 +27,7 @@ function UnitApplication() {
 
                 <UnitApplicationSelectedUnit />
             </div>
-
-            <UnitApplicationForm />
+            {currentAppUnit ? <UnitApplicationForm /> : <></>}
         </div>
     );
 }

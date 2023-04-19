@@ -15,13 +15,23 @@
     background-color:var(--background);
 }
 
-
+.dash-scrollable-div {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    max-height: 20vh;
+    margin: .5vh;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: whitesmoke;
+}
 .dash-tag {
-    display:inline-block;
+    display:flex;
     position: relative;
     vertical-align: middle;
     font-size: 2rem;
     text-align: center;
+    justify-content: center;
     width: 85vw;
     border: solid 3px #ccc;
     height: 7vh;

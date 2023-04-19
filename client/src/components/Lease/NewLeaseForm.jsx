@@ -67,7 +67,7 @@ function NewLeaseForm() {
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit}>
-                <label>Lesser ID:</label>
+                <label>Lessor ID:</label>
                 <input
                     label="Lessor ID:"
                     id="lessor_id"

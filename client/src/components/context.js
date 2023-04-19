@@ -18,6 +18,9 @@ const UserProvider = ({ children }) => {
 
     const [llPhoneFromMapView, setLlPhoneFromMapView] = useState("");
 
+    const [allLeases, setAllLeases] = useState(null);
+    const [userLeases, setUserLeases] = useState(null);
+
     const [userUnits, setUserUnits] = useState([]);
     const [pSearchResults, setPSearchResults] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
@@ -98,9 +101,37 @@ const UserProvider = ({ children }) => {
             city: selectedLeaseApp.unit ? selectedLeaseApp.unit.city : "",
             state: selectedLeaseApp.unit ? selectedLeaseApp.unit.state : "",
             zip: selectedLeaseApp.unit ? selectedLeaseApp.unit.zip : "",
-          });
+    });
         }
-      }, [selectedLeaseApp]);
+}, [selectedLeaseApp]);
+
+/////////////////////user Leases //
+
+useEffect(() => {
+    if (user) {
+        fetch("/leases", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                setUserLeases(data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
+}, [user]);
+
+
+
+
+
+
+
 
     /////////////////////// new unit /////////////////////////
 
@@ -179,7 +210,7 @@ const UserProvider = ({ children }) => {
 
     ///////////////////////////////////////////////////////////////////
 
-    const [unitOptionsApplication, setUnitOptionsApplication] = useState(true);
+    const [unitOptionsApplication, setUnitOptionsApplication] = useState(false);
 
     // const [newUnitApplication, setNewUnitApplication] = useState({
     //     lessee_id: user ? user.id : "",

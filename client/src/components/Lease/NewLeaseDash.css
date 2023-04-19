@@ -1,3 +1,27 @@
+.next-button {
+    background-color: var(--accent);
+    color: var(--darkText);
+    border: none;
+    border-radius: 0.25rem;
+    padding: .5rem;
+    cursor: pointer;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    bottom:0;
+    margin: 3px;
+    position: relative;
+}
+
+.next-button:hover {
+    background-color: var(--lightText);
+    color: var(--accent);
+    cursor: pointer;
+    /* border: var(--accent) solid 2px; */
+    
+}
+
+
+
 .new-lease-dash {
     display: flex;
     justify-content: center;
@@ -6,6 +30,17 @@
     width: 100vw;
     background-color: rgb(240, 255, 255);
 }
+
+.app-display-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 30vw;
+    background-color: rgb(240, 255, 255);
+}
+
 
 .lease-intro-container {
     display: flex;
@@ -34,16 +69,6 @@
     font-size: 24px;
 }
 
-.lease-intro-container button, .next-button  {
-    margin-top: 16px;
-    padding: 8px 16px;
-    border: none;
-    background-color: teal;
-    color: whitesmoke;
-    font-size: 16px;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
 .lease-intro-container button:hover {
     background-color: rgb(4, 184, 184);
@@ -85,7 +110,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 60vh;
+    height: 70vh;
     width: 30vw;
     margin: 1%;
     border-radius: 4px;

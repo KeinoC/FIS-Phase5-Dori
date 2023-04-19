@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
 import Sidebar from "../Global/Sidebar.jsx";
 import RentChart from "./RentChart.jsx";
+import StatBlock from "./StatBlock.jsx";
 import "./Dashboard.css"
 // import UnitCards from "../../Unit/UnitMapCards.jsx"
 import { UserContext } from "../../context.js";
@@ -30,12 +31,13 @@ function toggleShowApplications() {
         <div className="dashboard-page">
             <Sidebar />
         <div className="dashboard-container">
+            <StatBlock />
             <RentChart />
             <div className="dash-tag" onClick={toggleShowUnits}>Units</div>
             {showUnits ? <UserUnitsDash /> : <></>}
             
-            <div className="dash-tag" onClick={toggleShowApplications}>Applications</div>
-            {showApplications ? <UserApplicationDash /> : <></>}
+            <div className="dash-tag " onClick={toggleShowApplications}>Applications</div>
+            {showApplications ? <div className="dash-scrollable-div"><UserApplicationDash /></div> : <></>}
         </div>
         </div>
     );
