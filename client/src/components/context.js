@@ -1,11 +1,10 @@
 import React, { useEffect, useState, createContext } from "react";
 import { useHistory } from "react-router-dom";
-import Geocode from 'react-geocode';
+import Geocode from "react-geocode";
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-    
     const history = useHistory();
 
     const [user, setUser] = useState(null);
@@ -51,10 +50,8 @@ const UserProvider = ({ children }) => {
         price: "",
     });
 
-
-
     ///////////////////////// lease prefill ////////////////////////
-    const [selectedLeaseApp, setSelectedLeaseApp] = useState(null)
+    const [selectedLeaseApp, setSelectedLeaseApp] = useState(null);
     const [newLeaseFormData, setNewLeaseFormData] = useState({
         lessor_id: selectedLeaseApp ? selectedLeaseApp.unit.lessor_id : "",
         lessee_id: selectedLeaseApp ? selectedLeaseApp.lessee_id : "",
@@ -62,54 +59,169 @@ const UserProvider = ({ children }) => {
         rent: selectedApplication ? selectedApplication.rent : "",
         start_date: selectedApplication ? selectedApplication.start_date : "",
         end_date: selectedApplication ? selectedApplication.end_date : "",
-        rent : selectedApplication ? selectedApplication.unit.rent : "",
-        sec_deposit : selectedApplication ? selectedApplication.sec_deposit : "",
-        beds : selectedApplication ? selectedApplication.unit.beds : "",
-        baths : selectedApplication ? selectedApplication.unit.baths : "",
-        sqft : selectedApplication ? selectedApplication.unit.sqft : "",
-        type : selectedApplication ? selectedApplication.unit.type : "",
-        util_incld : selectedApplication ? selectedApplication.unit.util_incld : "",
-        util_excluded : selectedApplication ? selectedApplication.unit.util_excluded : "",
-        lot : selectedApplication ? selectedApplication.unit.lot : "",
-        street : selectedApplication ? selectedApplication.unit.street : "",
-        unit_num : selectedApplication ? selectedApplication.unit.unit_num : "",
-        city : selectedApplication ? selectedApplication.unit.city : "",
-        state : selectedApplication ? selectedApplication.unit.state : "",
-        zip : selectedApplication ? selectedApplication.unit.zip : "",
-    })
+        rent: selectedApplication ? selectedApplication.unit.rent : "",
+        sec_deposit: selectedApplication ? selectedApplication.sec_deposit : "",
+        beds: selectedApplication ? selectedApplication.unit.beds : "",
+        baths: selectedApplication ? selectedApplication.unit.baths : "",
+        sqft: selectedApplication ? selectedApplication.unit.sqft : "",
+        type: selectedApplication ? selectedApplication.unit.type : "",
+        util_incld: selectedApplication
+            ? selectedApplication.unit.util_incld
+            : "",
+        util_excluded: selectedApplication
+            ? selectedApplication.unit.util_excluded
+            : "",
+        lot: selectedApplication ? selectedApplication.unit.lot : "",
+        street: selectedApplication ? selectedApplication.unit.street : "",
+        unit_num: selectedApplication ? selectedApplication.unit.unit_num : "",
+        city: selectedApplication ? selectedApplication.unit.city : "",
+        state: selectedApplication ? selectedApplication.unit.state : "",
+        zip: selectedApplication ? selectedApplication.unit.zip : "",
+    });
 
     useEffect(() => {
         if (selectedLeaseApp) {
-          setNewLeaseFormData({
-            lessor_id: selectedLeaseApp.unit ? selectedLeaseApp.unit.lessor_id : "",
-            lessee_id: selectedLeaseApp.lessee_id || "",
-            unit_id: selectedLeaseApp.unit_id || "",
-            rent: selectedLeaseApp.rent || "",
-            start_date: selectedLeaseApp.start_date || "",
-            end_date: selectedLeaseApp.end_date || "",
-            rent: selectedLeaseApp.unit ? selectedLeaseApp.unit.rent : "",
-            sec_deposit: selectedLeaseApp.sec_deposit || "",
-            beds: selectedLeaseApp.unit ? selectedLeaseApp.unit.beds : "",
-            baths: selectedLeaseApp.unit ? selectedLeaseApp.unit.baths : "",
-            sqft: selectedLeaseApp.unit ? selectedLeaseApp.unit.sqft : "",
-            type: selectedLeaseApp.unit ? selectedLeaseApp.unit.type : "",
-            util_incld: selectedLeaseApp.unit ? selectedLeaseApp.unit.util_incld : "",
-            util_excluded: selectedLeaseApp.unit ? selectedLeaseApp.unit.util_excluded : "",
-            lot: selectedLeaseApp.unit ? selectedLeaseApp.unit.lot : "",
-            street: selectedLeaseApp.unit ? selectedLeaseApp.unit.street : "",
-            unit_num: selectedLeaseApp.unit ? selectedLeaseApp.unit.unit_num : "",
-            city: selectedLeaseApp.unit ? selectedLeaseApp.unit.city : "",
-            state: selectedLeaseApp.unit ? selectedLeaseApp.unit.state : "",
-            zip: selectedLeaseApp.unit ? selectedLeaseApp.unit.zip : "",
-    });
+            setNewLeaseFormData({
+                lessor_id: selectedLeaseApp.unit
+                    ? selectedLeaseApp.unit.lessor_id
+                    : "",
+                lessee_id: selectedLeaseApp.lessee_id || "",
+                unit_id: selectedLeaseApp.unit_id || "",
+                rent: selectedLeaseApp.rent || "",
+                start_date: selectedLeaseApp.start_date || "",
+                end_date: selectedLeaseApp.end_date || "",
+                rent: selectedLeaseApp.unit ? selectedLeaseApp.unit.rent : "",
+                sec_deposit: selectedLeaseApp.sec_deposit || "",
+                beds: selectedLeaseApp.unit ? selectedLeaseApp.unit.beds : "",
+                baths: selectedLeaseApp.unit ? selectedLeaseApp.unit.baths : "",
+                sqft: selectedLeaseApp.unit ? selectedLeaseApp.unit.sqft : "",
+                type: selectedLeaseApp.unit ? selectedLeaseApp.unit.type : "",
+                util_incld: selectedLeaseApp.unit
+                    ? selectedLeaseApp.unit.util_incld
+                    : "",
+                util_excluded: selectedLeaseApp.unit
+                    ? selectedLeaseApp.unit.util_excluded
+                    : "",
+                lot: selectedLeaseApp.unit ? selectedLeaseApp.unit.lot : "",
+                street: selectedLeaseApp.unit
+                    ? selectedLeaseApp.unit.street
+                    : "",
+                unit_num: selectedLeaseApp.unit
+                    ? selectedLeaseApp.unit.unit_num
+                    : "",
+                city: selectedLeaseApp.unit ? selectedLeaseApp.unit.city : "",
+                state: selectedLeaseApp.unit ? selectedLeaseApp.unit.state : "",
+                zip: selectedLeaseApp.unit ? selectedLeaseApp.unit.zip : "",
+            });
         }
-}, [selectedLeaseApp]);
+    }, [selectedLeaseApp]);
 
-/////////////////////user Leases //
+    //////////////////////////// Deletes by Id //////////////////////
 
-useEffect(() => {
-    if (user) {
-        fetch("/leases", {
+    function deleteAppById(id) {
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this application?"
+        );
+        if (confirmDelete) {
+            fetch(`/unit_applications/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Success:", data);
+                    setAllApplications(allApplications.filter(app => app.id !== id))
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+    }
+
+    function deleteLeaseById(id) {
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this lease?"
+        );
+        if (confirmDelete) {
+            fetch(`/leases/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Success:", data);
+                    setAllLeases(allLeases.filter(lease => lease.id !== id))
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+    }
+
+    function deleteUnitById(id) {
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete this unit?"
+        );
+        if (confirmDelete) {
+            fetch(`/units/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Success:", data);
+                    setAllUnits(allUnits.filter(unit => unit.id !== id))
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+    }
+
+    //////////////////// All Leases //
+
+    useEffect(() => {
+        if (user) {
+            fetch("/leases", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Success:", data);
+                    setAllLeases(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+    }, [user]);
+
+    console.log(allLeases);
+    /////////////////////// user leases /////////////////////////
+
+    useEffect(() => {
+        if (user) {
+            const uLeases = allLeases.filter((lease) => {
+                if (lease.lessee_id === user.id) {
+                    setUserLeases((userLeases) => [...userLeases, lease]);
+                }
+            });
+        }
+    }, [allLeases]);
+
+    //////////////by id helpers //////////////////////
+
+    useEffect(() => {
+        fetch("/users", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -118,20 +230,24 @@ useEffect(() => {
             .then((response) => response.json())
             .then((data) => {
                 console.log("Success:", data);
-                setUserLeases(data);
+                setUsers(data);
             })
             .catch((error) => {
                 console.error("Error:", error);
             });
-    }
-}, [user]);
+    }, []);
 
+    const [users, setUsers] = useState([]);
+    const [selectedAppLessee, setSelectedAppLessee] = useState(null);
 
-
-
-
-
-
+    useEffect(() => {
+        if (selectedApplication) {
+            const lessee = users.find(
+                (user) => user.id === selectedApplication.lessee_id
+            );
+            setSelectedAppLessee(lessee);
+        }
+    }, [selectedLeaseApp]);
 
     /////////////////////// new unit /////////////////////////
 
@@ -147,6 +263,7 @@ useEffect(() => {
             .then((response) => response.json())
             .then((data) => {
                 console.log("Success:", data);
+                setAllUnits((allUnits) => [...allUnits, data]);
                 setNewUnitFormData({
                     lessor_id: myId,
                     // lessor: user,
@@ -350,12 +467,13 @@ useEffect(() => {
     useEffect(() => {
         if (user && allApplications) {
             const uApps = allApplications.filter(
-                (app) => app.lessee_id === user.id || app.lessor_id === app.unit.lessor_id
+                (app) =>
+                    app.lessee_id === user.id ||
+                    app.lessor_id === app.unit.lessor_id
             );
             setUserApplications(uApps);
         }
     }, [user, allApplications]);
-
 
     // userApplications.map((app) => {
     //   const userAppList = []
@@ -399,8 +517,8 @@ useEffect(() => {
         }
     };
 
-    const testAddy = "1738 brooklyn Avenue brooklyn, ny 11210"
-    console.log(getCoordinates(testAddy))
+    const testAddy = "1738 brooklyn Avenue brooklyn, ny 11210";
+    console.log(getCoordinates(testAddy));
 
     //////handle Property search //////////////////
 
@@ -423,7 +541,6 @@ useEffect(() => {
     //     setFilteredUnits(allUnits);
     //     }
     // }, [allUnits]);
-
 
     useEffect(() => {
         if (
@@ -550,7 +667,14 @@ useEffect(() => {
                 newLeaseFormData,
                 setNewLeaseFormData,
                 setSelectedLeaseApp,
-
+                allLeases,
+                setAllLeases,
+                userLeases,
+                setUserLeases,
+                selectedAppLessee,
+                deleteAppById,
+                deleteLeaseById,
+                deleteUnitById,
             }}
         >
             {children}

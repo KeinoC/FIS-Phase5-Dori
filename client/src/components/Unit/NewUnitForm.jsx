@@ -4,17 +4,29 @@ import "./NewUnitForm.css";
 import { Link, useHistory } from "react-router-dom";
 
 function NewUnitForm() {
-    const { user, myId, setMyId, handleInputChange, handleNewUnitSubmit, newUnitFormData, setNewUnitFormData } = useContext(UserContext)
+    const {
+        user,
+        myId,
+        setMyId,
+        handleInputChange,
+        handleNewUnitSubmit,
+        newUnitFormData,
+        setNewUnitFormData,
+    } = useContext(UserContext);
 
     const history = useHistory();
     const handleSubmit = (event) => {
         event.preventDefault();
-        history.push("/dashboard");
+        if (!newUnitFormData.price) {
+        alert("please enter a price value")
+        return;
+        } else {
+            history.push("/dashboard");
         handleNewUnitSubmit(event);
-    }
+        }
+    };
 
-
-    const renderInput = (inputName,) => {
+    const renderInput = (inputName) => {
         return (
             <label>
                 {inputName}:
@@ -29,29 +41,30 @@ function NewUnitForm() {
     };
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
+        <div className="new-unit-page">
+            <h1 className="unit-creation" >Unit Creation Form</h1>
+            <form className="new-unit-form" onSubmit={handleSubmit}>
                 {renderInput("name")}
                 {renderInput("image_url")}
                 {renderInput("type")}
                 {renderInput("unit_num")}
-                {renderInput("lot")}
-                {renderInput("street")}
-                {renderInput("city")}
-                {renderInput("state")}
-                {renderInput("zip")}
-                {renderInput("beds")}
-                {renderInput("baths")}
-                {renderInput("sqft")}
-                {renderInput("price")}
-                
+                {renderInput("lot", true)}
+                {renderInput("street", true)}
+                {renderInput("city", true)}
+                {renderInput("state", true)}
+                {renderInput("zip", true)}
+                {renderInput("beds", true)}
+                {renderInput("baths", true)}
+                {renderInput("sqft", true)}
+                {renderInput("price", true)}
+                <div className="button-div">
                 <Link to="/dashboard">
                     <button type="button">Cancel</button>
                 </Link>
-
-                    <button type="submit">Submit</button>
+                <button type="submit">Submit</button>
+                </div>
             </form>
-        </>
+        </div>
     );
 }
 

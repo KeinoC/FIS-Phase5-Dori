@@ -24,3 +24,8 @@
     0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
 
 }
+
+html main {
+    height: 100vh;
+    background-color: var(--background);
+}

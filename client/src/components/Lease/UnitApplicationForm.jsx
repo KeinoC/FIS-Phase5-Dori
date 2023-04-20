@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../context.js";
+import "./UnitApplicationForm.css"
 
 function UnitApplicationForm() {
     const {
@@ -19,6 +20,8 @@ function UnitApplicationForm() {
     } = useContext(UserContext);
 
 console.log(currentAppUnit)
+console.log(currentAppUnit)
+console.log(user.id)
 
     return (
         <div className="unit-application-form">
@@ -55,11 +58,11 @@ console.log(currentAppUnit)
                 <li>Unit Number: <span>{currentAppUnit.unit_num}</span></li>
                 <br />
                 <li>--Details</li>
-                <li>Unit Type: <span>{currentAppUnit.unit_type}</span></li>
+                <li>Unit Type: <span>{currentAppUnit.type}</span></li>
                 <li>Unit Size: <span>{currentAppUnit.sqft}</span></li>
                 <li>Unit Beds: <span>{currentAppUnit.beds}</span></li>
                 <li>Unit Baths: <span>{currentAppUnit.baths}</span></li>
-                <li>Unit Rent: <span>{currentAppUnit.rent}</span></li>
+                <li>Unit Rent: <span>{currentAppUnit.price}</span></li>
                 <br />
                 <li>--Landlord Info</li>
                 <li>First Name: <span>{currentAppLessor.first_name}</span></li>

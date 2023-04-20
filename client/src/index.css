@@ -2,3 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+body::-webkit-scrollbar {
+    display: none;
+    opacity: 0;
+}
+
+body::-webkit-scrollbar-thumb {
+    display: none;
+    opacity: 0;
+}
+
+main::-webkit-scrollbar-thumb {
+    display: none;
+    opacity:0;
+}
+body::-webkit-scrollbar {
+    display: none;
+}

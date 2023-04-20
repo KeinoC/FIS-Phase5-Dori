@@ -37,7 +37,9 @@ ul {
     text-decoration: none;
     font-size: 1.5rem;
     transition: all 0.5s ease-in-out;
-    background-color: var(--background);
+    background-color: var(--darkText);
+    cursor: pointer;
+    color: var(--accent)
 }
 
 

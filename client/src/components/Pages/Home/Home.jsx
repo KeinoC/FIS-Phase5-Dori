@@ -18,21 +18,21 @@ function Home() {
 
     const avatarRef = useRef(null);
 
-    useEffect(() => {
-        const options = {
-            rootMargin: "0px",
-            threshold: 0.5,
-        };
-        const avatar = avatarRef.current;
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                avatar.classList.add("animate");
-            } else {
-                avatar.classList.remove("animate");
-            }
-        }, options);
-        observer.observe(avatar);
-    }, []);
+    // useEffect(() => {
+    //     const options = {
+    //         rootMargin: "0px",
+    //         threshold: 0.5,
+    //     };
+    //     const avatar = avatarRef.current;
+    //     const observer = new IntersectionObserver((entries) => {
+    //         if (entries[0].isIntersecting) {
+    //             avatar.classList.add("animate");
+    //         } else {
+    //             avatar.classList.remove("animate");
+    //         }
+    //     }, options);
+    //     observer.observe(avatar);
+    // }, []);
 
     return (
         <div>
@@ -40,8 +40,8 @@ function Home() {
             <div className="search-wrapper">
                 <div className="search-sliding-background">
                     <div className="tagline">
-                        Meet your new neighbor with{" "}
-                        <span className="doori-1">DOORi</span>
+                        <span>Meet your new neighbor with</span>
+                        <span className="doori-1"> DOORi</span>
                     </div>
                     <form className="home-search-div" onSubmit={handleSubmit}>
                         <input
@@ -75,7 +75,6 @@ function Home() {
                         founded in April 2023 with a mission to introduce you to
                         your new neighbor.
                     </p>
-                    <br />
                     <p>
                         As a small business owner, we understand the importance
                         of creating strong relationships with both property
@@ -84,7 +83,6 @@ function Home() {
                         managing all aspects of property management from rent
                         collection to maintenance requests.
                     </p>
-                    <br />
                     <p>
                         Our team consists of experienced professionals who are
                         passionate about delivering exceptional service to our
@@ -94,18 +92,18 @@ function Home() {
                         Let us be your trusted partner in managing your
                         property, so you can focus on what matters most.
                     </p>
-                    <br />
+
                 </div>
             </div>
         </div>
-            <div className="av-container">
+            {/* <div className="av-container">
                 <img
                     className="avatar"
                     src="https://i.ibb.co/pQRV3K2/keino.png"
                     ref={avatarRef}
-                />
-                        <p>Keino</p>
-            </div>
+                /> */}
+                        {/* <p>Keino</p> */}
+            {/* </div> */}
         </div>
     );
 }

@@ -1,50 +1,126 @@
-.container {
+.new-unit-page {
+    /* padding: 50px; */
     display: flex;
     flex-direction: column;
+    background-color: var(--lightText);
+    width: 30vw;
+    /* Center horizontally */
+    margin: auto;
+    position: absolute;
+    top: -100vh; /* Slide down from top */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* Center vertically */
     align-items: center;
     justify-content: center;
-    width: 80%;
-    max-width: 500px;
-    margin: 0 auto;
-
+    box-shadow: var(--boxShadow);
+    justify-items: space-evenly;
+    border-radius: 0.4rem;
+    height: 80vh;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    animation: slideDown 0.5s ease-in-out forwards; /* Animation for sliding down */
 }
 
-form {
+@keyframes slideDown {
+    0% {
+        top: -100vh;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+.button-div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     width: 100%;
-    margin-top: 7vh;
+    margin-top: 20px;
+    opacity: 0; /* Hide initially */
+    animation: slideIn 0.4s ease-in-out 0.4s forwards; /* Animation for sliding in with 0.5s delay */
 }
 
-.container label {
-    margin: 10px 0;
-    font-size: 1.2rem;
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-input[type="text"],
-input[type="number"] {
-    padding: 10px;
-    font-size: 1.2rem;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-
-button[type="submit"] {
-    background-color: #4caf50;
-    color: white;
+.button-div button {
+    background-color: var(--darkText);
+    color: var(--accent);
     font-size: 1.2rem;
     padding: 10px;
     border: none;
     border-radius: 4px;
+    min-width: 50%;
     cursor: pointer;
-    margin-top: 20px;
+    box-shadow: var(--boxShadow);
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+.button-div button:hover {
+    background-color: var(--accent);
+    color: var(--darkText);
+}
+
+.unit-creation {
+    margin-top: 0vh;
+    background-color: var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 105%;
+    box-shadow: var(--boxShadow);
+}
+
+.new-unit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.new-unit-form label {
+    margin: 5px 0;
+    font-size: 1.2rem;
+    animation: slideLeft 0.5s ease-in-out alternate forwards; /* Animation for sliding from left with alternate speed */
+    animation-delay: .2s; /* Delay start animation by 1s */
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.new-unit-form input[type="text"],
+.new-unit-form input[type="number"] {
+    padding: 10px;
+    font-size: 3rem;
+    border-radius: 6px;
+    width: 20vw;
+    margin-top: 1px;
+    animation: slideUp 0.5s ease-in-out forwards; /* Animation for sliding up */
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext} from "./context.js"
+import "./LoginSignUpForm.css"
 
-function SignUpForm() {
+function SignUpForm({ setShowLogin, showLogin}) {
 
 const {setUser} = useContext(UserContext)
 
@@ -71,9 +72,11 @@ const {setUser} = useContext(UserContext)
   }
 
   return (
-    
+    <div className="sign-up-form-container">
     <form onSubmit={(e)=>handleSubmit(e)}>
-        <label htmlFor="username">Username</label>
+
+      <div>
+      <label htmlFor="username">Username</label>
         <input
           type="text"
           id="username"
@@ -81,6 +84,9 @@ const {setUser} = useContext(UserContext)
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+      </div>
+
+<div>
         <label htmlFor="first_name">First Name</label>
         <input
           type="text"
@@ -89,6 +95,9 @@ const {setUser} = useContext(UserContext)
           value={first_name}
           onChange={(e) => setFirst_name(e.target.value)}
         />
+     </div>
+     
+     <div>
         <label htmlFor="last_name">Last Name</label>
         <input
           type="text"
@@ -97,6 +106,10 @@ const {setUser} = useContext(UserContext)
           value={last_name}
           onChange={(e) => setLast_name(e.target.value)}
         />
+</div>
+
+
+<div>
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -105,6 +118,9 @@ const {setUser} = useContext(UserContext)
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+</div>
+
+<div>
         <label htmlFor="phone">Phone</label>
         <input
           type="tel"
@@ -113,6 +129,9 @@ const {setUser} = useContext(UserContext)
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
+</div>
+
+<div>
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -121,6 +140,9 @@ const {setUser} = useContext(UserContext)
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
         />
+</div>
+
+<div>
         <label htmlFor="password">Password Confirmation</label>
         <input
           type="password"
@@ -129,6 +151,9 @@ const {setUser} = useContext(UserContext)
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           autoComplete="current-password"
         />
+     </div>
+     
+     <div>
         <label htmlFor="dob">Date of Birth</label>
         <input
           type="date"
@@ -136,6 +161,9 @@ const {setUser} = useContext(UserContext)
           value={dob}
           onChange={(e) => setDob(e.target.value)}
         />
+        </div>
+        
+        <div>
         <label htmlFor="lot">Lot Number</label>
         <input
           type="text"
@@ -143,6 +171,9 @@ const {setUser} = useContext(UserContext)
           value={lot}
           onChange={(e) => setLot(e.target.value)}
         />
+  </div>
+
+<div>
         <label htmlFor="street">Street</label>
         <input
           type="text"
@@ -150,6 +181,9 @@ const {setUser} = useContext(UserContext)
           value={street}
           onChange={(e) => setStreet(e.target.value)}
         />
+</div>
+
+<div>
         <label htmlFor="city">City</label>
         <input
           type="text"
@@ -157,6 +191,9 @@ const {setUser} = useContext(UserContext)
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
+     </div>
+     
+     <div>
         <label htmlFor="state">State</label>
         <input
           type="text"
@@ -164,6 +201,9 @@ const {setUser} = useContext(UserContext)
           value={state}
           onChange={(e) => setState(e.target.value)}
         />
+</div>
+
+<div>
         <label htmlFor="zip">Zip Code</label>
         <input
           type="text"
@@ -171,6 +211,9 @@ const {setUser} = useContext(UserContext)
           value={zip}
           onChange={(e) => setZip(e.target.value)}
         />
+     </div>
+     
+     <div>
         <label htmlFor="photo_id">Photo ID</label>
         <input
           type="text"
@@ -178,6 +221,9 @@ const {setUser} = useContext(UserContext)
           value={photo_id}
           onChange={(e) => setPhoto_id(e.target.value)}
         />
+        </div>
+        
+        <div>
         <label htmlFor="image_url">Image URL</label>
         <input
           type="text"
@@ -185,16 +231,22 @@ const {setUser} = useContext(UserContext)
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
+
+</div>
+<div>
         <label htmlFor="bio">Bio</label>
         <i
           id="bio"
           value={bio}
           onChange={(e) => setBio(e.target.value)}
         />
+    </div>
           <button type="submit">
             Sign Up
           </button>
+          <button className="toggle-button" onClick={() => setShowLogin(!showLogin)}> {showLogin ? "Already have an account?" : "Need an account?"}</button>
 </form>
+</div>
   );
 }
 

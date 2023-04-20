@@ -3,7 +3,7 @@ import { UserContext } from "../context.js";
 import "./NewLeaseForm.css";
 
 function NewLeaseForm() {
-    const { user, selectedLeaseApp, newLeaseFormData, setNewLeaseFormData } =
+    const { user, selectedLeaseApp, selectedAppLessee, newLeaseFormData, setNewLeaseFormData, setAllLeases, allLeases } =
         useContext(UserContext);
 
     console.log(selectedLeaseApp);
@@ -16,12 +16,16 @@ function NewLeaseForm() {
         });
     };
 
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const leaseData = {
-            lessor_id: newLeaseFormData?.unit?.lessor_id || "",
+            lessor_id: user?.id || "",
             lessee_id: newLeaseFormData?.lessee_id || "",
             unit_id: newLeaseFormData?.unit_id || "",
+            signed_date: newLeaseFormData?.signed_date || "",
+            start_date: newLeaseFormData?.start_date || "",
+            end_date: newLeaseFormData?.end_date || "",
             rent: newLeaseFormData?.rent || "",
             sec_deposit: newLeaseFormData?.sec_deposit || "",
             beds: newLeaseFormData?.beds || "",
@@ -50,7 +54,10 @@ function NewLeaseForm() {
             })
             .then((data) => {
                 console.log(data);
-                // reset form data
+                if(allLeases.length > 0) {
+                    setAllLeases(allLeases.push(data))
+                }
+                    // reset form data
                 setNewLeaseFormData(
                     Object.fromEntries(
                         Object.keys(newLeaseFormData).map((key) => [key, ""])
@@ -66,15 +73,36 @@ function NewLeaseForm() {
 
     return (
         <div className="form-container">
-            <form onSubmit={handleSubmit}>
-                <label>Lessor ID:</label>
+            <form className="new-lease-form-container" onSubmit={handleSubmit}>
+                <label>Sign on:</label>
                 <input
-                    label="Lessor ID:"
-                    id="lessor_id"
-                    name="lessor_id"
-                    type="text"
+                    label="signed_date"
+                    id="signed_date"
+                    name="signed_date"
+                    type="date"
                     // placeholder={newLeaseFormData ? newLeaseFormData.unit.lessor_id : ""}
-                    value={newLeaseFormData.lessor_id}
+                    value={newLeaseFormData.signed_date}
+                    onChange={handleInputChange}
+                />
+                
+                <label>Commence on:</label>
+                <input
+                    label="start_date"
+                    id="start_date"
+                    name="start_date"
+                    type="date"
+                    // placeholder={newLeaseFormData ? newLeaseFormData.unit.lessor_id : ""}
+                    value={newLeaseFormData.start_date}
+                    onChange={handleInputChange}
+                />
+                                                <label>Terminate on:</label>
+                <input
+                    label="end_date"
+                    id="end_date"
+                    name="end_date"
+                    type="date"
+                    // placeholder={newLeaseFormData ? newLeaseFormData.unit.lessor_id : ""}
+                    value={newLeaseFormData.end_date}
                     onChange={handleInputChange}
                 />
                 <label>Lessee ID:</label>

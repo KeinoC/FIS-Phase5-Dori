@@ -2,7 +2,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
 from sqlalchemy.ext.associationproxy import association_proxy
-
+from sqlalchemy.orm import validates
 from config import db, bcrypt
 
 
@@ -164,6 +164,12 @@ class Unit (db.Model, SerializerMixin):
         if self.updated_at is not None:
             data['updated_at'] = self.updated_at.isoformat()
         return data
+############# unit validation - price ########
+    @validates('price')
+    def validate_price(self, key, value):
+        if value:
+            return value
+        raise ValueError("Invalid Lessor")
     
 ################################  APPLICATION  #####################################
 

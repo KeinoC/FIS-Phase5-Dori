@@ -23,18 +23,15 @@
     min-height: 10vh;
     margin-bottom: 2%;
     background-color: whitesmoke;
-    border-radius: 1rem;
+    border-radius: 5px;
     overflow: hidden;
     position: relative;
     transition: all 0.2s ease-out;
-    box-shadow: 0.5px 1.3px 18.4px rgba(0, 0, 0, 0.016),
-        1.6px 4.5px 61.6px rgba(0, 0, 0, 0.024),
-        7px 20px 276px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--boxShadow)
 }
 
 .a-unit-card-div:hover {
     transform: scale(1.02);
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 

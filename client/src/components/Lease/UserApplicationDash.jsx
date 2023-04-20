@@ -9,12 +9,13 @@ function UserApplicationDash() {
         selectedApplication,
         setSelectedApplication,
         setSelectedLeaseApp,
+        deleteAppById,
     } = useContext(UserContext);
 
     const renderUserAppCards = () => {
         if (userApplications) {
             return userApplications.map((app) => (
-                <div className="user-application-card" key={app.id}>
+                <div className="user-application-card2" key={app.id}>
                     <div className="image-container">
                         <img src={app.unit.image_url} alt="unit" />
                     </div>
@@ -30,13 +31,14 @@ function UserApplicationDash() {
                                 City / State: {app.unit.city},{" "}
                                 {app.unit.state}
                             </h4>
+                                <h4>Price: ${app.unit.price} per month</h4>
                             <div className="buttons">
                                 <button
                                     className="button"
-                                    onClick={() => setSelectedLeaseApp(app)}
-                                >
-                                    Select App
-                                </button>
+                                    onClick={() => setSelectedLeaseApp(app)}>Select App</button>
+                            <div className = "button delete-button" onClick={()=>deleteAppById(app.id)}>Delete</div>
+                            
+                            
                             </div>
                         </div>
                     </div>
@@ -46,7 +48,7 @@ function UserApplicationDash() {
         return null;
     };
 
-    return <div className="app-scroll-div">{renderUserAppCards()}</div>;
+    return <div className="app-scroll-div2">{renderUserAppCards()}</div>;
 }
 
 export default UserApplicationDash;

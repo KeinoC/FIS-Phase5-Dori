@@ -17,13 +17,13 @@
 }
 
 /* add styles for form elements */
-label {
+.new-lease-form-container label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
 }
 
-input[type="text"] {
+.new-lease-form-container input[type="text"] {
     width: 100%;
     padding: 0.5rem;
     border-radius: 0.25rem;
@@ -31,7 +31,7 @@ input[type="text"] {
     margin-bottom: 1rem;
 }
 
-input[type="submit"] {
+.new-lease-form-container input[type="submit"] {
     background-color: #0077cc;
     color: #fff;
     border: none;

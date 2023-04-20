@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Button, Error, Input, FormField, Label } from "../styles";
 import {useHistory} from "react-router-dom";
-import "./LoginForm.css"
+import "./LoginSignUpForm.css"
 
 import {UserContext} from "./context";
 
-function LoginForm() {
+function LoginForm({ setShowLogin, showLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
@@ -40,7 +40,7 @@ function LoginForm() {
   }
   
   return (
-    <form onSubmit={handleSubmit} className = "login-form login-container">
+    <form onSubmit={handleSubmit} className = "login-form-container">
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -65,6 +65,9 @@ function LoginForm() {
         <button variant="fill" color="primary" type="submit">
           {isLoading ? "Loading..." : "Login"}
         </button>
+        <br/>
+        <br/>
+        <button className="toggle-button" onClick={() => setShowLogin(!showLogin)}> {showLogin ? "Already have an account?" : "Need an account?"}</button>
       </div>
       <FormField>
         {/* {errors.map((err) => (

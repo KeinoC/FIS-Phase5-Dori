@@ -149,16 +149,19 @@ class Logout(Resource):
 # Create a new unit
 @app.route('/units', methods=['POST'])
 def create_unit():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    unit = Unit(**data)
-    # unit.lessor = lessor
+        unit = Unit(**data)
 
-    db.session.add(unit)
-    db.session.commit()
+        db.session.add(unit)
+        db.session.commit()
 
-
-    return jsonify(unit.serialize()), 201
+        return jsonify(unit.serialize()), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": "Unit must have price! Try again"}), 500
 
 # Get all units
 @app.route('/units', methods=['GET'])
@@ -248,7 +251,34 @@ def delete_unit_application(id):
 @app.route('/leases', methods=['POST'])
 def create_lease():
     data = request.json
-    lease = Lease(**data)
+    signed_date_str = data['signed_date']  
+    start_date_str = data['start_date']  
+    end_date_str = data['end_date']  
+    
+    signed_date = datetime.strptime(signed_date_str, '%Y-%m-%d')  
+    start_date = datetime.strptime(start_date_str, '%Y-%m-%d')  
+    end_date = datetime.strptime(end_date_str, '%Y-%m-%d')  
+    
+    lease = Lease(lessor_id=data['lessor_id'],
+        lessee_id=data['lessee_id'],
+        unit_id=data['unit_id'],
+        signed_date=signed_date,  
+        start_date=start_date,  
+        end_date=end_date,  
+        rent=data['rent'],
+        sec_deposit=data['sec_deposit'],
+        beds=data['beds'],
+        baths=data['baths'],
+        sqft=data['sqft'],
+        type=data['type'],
+        util_incld=data['util_incld'],
+        util_excld=data['util_excld'],
+        lot=data['lot'],
+        street=data['street'],
+        unit_num=data['unit_num'],
+        city=data['city'],
+        state=data['state'],
+        zip=data['zip'])
     db.session.add(lease)
     db.session.commit()
     return jsonify(lease.to_dict()), 201

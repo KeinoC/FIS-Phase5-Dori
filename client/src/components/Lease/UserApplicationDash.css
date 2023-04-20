@@ -10,15 +10,26 @@
     bottom:0;
 }
 
-.app-scroll-div {
+.app-scroll-div2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 20vh;
-    width: 80vw;
+    min-height: 20vh;
+    width: 90vw;
     background-color: rgb(240, 255, 255);
     overflow: hidden;
+    overflow-y: scroll;
+}
+
+.user-application-card2 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-height: 20vh;
+    margin: .5vh;
+    border-radius: 5px;
+    background-color:whitesmoke;
 }
 
 .button:hover {
@@ -26,16 +37,6 @@
     cursor: pointer;
 }
 
-.user-application-card {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    max-height: 20vh;
-    margin: .5vh;
-    border-radius: 5px;
-    overflow-y: scroll;
-    background-color:whitesmoke;
-}
 
 .user-application-card-info-container {
     flex-direction: column;
@@ -54,8 +55,15 @@
     font-size: .7rem;
 }
 
+.image-container {
+    width: 30vw;
+    display:flex;
+}
+
 img {
     width:100%;
     height: 100%;
+    overflow: hidden;
     object-fit: cover;
+
 }
