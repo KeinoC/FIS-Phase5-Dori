@@ -203,21 +203,41 @@ const UserProvider = ({ children }) => {
                     console.error("Error:", error);
                 });
         }
-    }, [user]);
+    }, []);
 
-    console.log(allLeases);
     /////////////////////// user leases /////////////////////////
-
     useEffect(() => {
-        if (user) {
+        fetch("/leases", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                setAllLeases(data);
+            }
+            )
+        }, [])
+        
+
+
+        
+        useEffect(() => {
+        if (user & allLeases) {
             const uLeases = allLeases.filter((lease) => {
-                if (lease.lessee_id === user.id) {
+                if (lease.lessee_id === user.id || lease.lessor_id === user.id) {
+                    setUserLeases(uLeases)
                     setUserLeases((userLeases) => [...userLeases, lease]);
                 }
             });
         }
     }, [allLeases]);
-
+    
+    
+    console.log(allLeases);
+    console.log(userLeases);
     //////////////by id helpers //////////////////////
 
     useEffect(() => {

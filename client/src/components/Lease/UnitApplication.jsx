@@ -24,7 +24,6 @@ function UnitApplication() {
             <h1>Unit Application</h1>
             <div>
                 {unitOptionsApplication ? <UnitApplicationListView /> : <></>}
-
                 <UnitApplicationSelectedUnit />
             </div>
             {currentAppUnit ? <UnitApplicationForm /> : <></>}

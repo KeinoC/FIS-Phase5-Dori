@@ -154,6 +154,7 @@ def create_unit():
 
         unit = Unit(**data)
 
+
         db.session.add(unit)
         db.session.commit()
 

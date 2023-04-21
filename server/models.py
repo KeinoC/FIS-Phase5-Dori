@@ -213,7 +213,9 @@ class UnitApplication (db.Model, SerializerMixin):
 
 
 ################################  LEASE  #####################################
-class Lease (db.Model, SerializerMixin):
+from sqlalchemy_serializer import SerializerMixin
+
+class Lease(db.Model, SerializerMixin):
     __tablename__ = 'leases'
     id = db.Column(db.Integer, primary_key=True)
     lessor_id = db.Column(db.Integer(), db.ForeignKey('lessors.id'))
@@ -238,6 +240,37 @@ class Lease (db.Model, SerializerMixin):
     zip = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    def __repr__(self):
+        return f'<Lease {self.id}: {self.name}>'
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'lessor_id': self.lessor_id,
+            'lessee_id': self.lessee_id,
+            'unit_id': self.unit_id,
+            'signed_date': self.signed_date,
+            'start_date': self.start_date,
+            'end_date': self.end_date,
+            'rent': self.rent,
+            'sec_deposit': self.sec_deposit,
+            'beds': self.beds,
+            'baths': self.baths,
+            'sqft': self.sqft,
+            'type': self.type,
+            'util_incld': self.util_incld,
+            'util_excld': self.util_excld,
+            'lot': self.lot,
+            'street': self.street,
+            'unit_num': self.unit_num,
+            'city': self.city,
+            'state': self.state,
+            'zip': self.zip,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
 
     def __repr__(self):
         return f'<Lease {self.id}: {self.name}>'
